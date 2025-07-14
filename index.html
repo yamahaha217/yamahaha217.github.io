@@ -1,9 +1,2350 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<title>测试页面</title>
+<meta charset="UTF-8">
+<title>考试（支持多选即时反馈）</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; }
+h1 { text-align: center; }
+.question { margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc; }
+.analysis { display: none; margin-top: 5px; color: #555; font-size: 0.9em; }
+.feedback { margin-top: 5px; font-weight: bold; }
+.correct { color: green; }
+.wrong { color: red; }
+</style>
 </head>
 <body>
-<h1>Hello, GitHub Pages!</h1>
+
+<h1>考试（支持多选即时反馈）</h1>
+
+<form id="examForm">
+<div class="question" id="q1">
+  <p>1. 机关、单位对不属于本机关、本单位产生的国家秘密，认为符合保密法有关解密或者延长保密期限规定的，应当及时解密或者延长保密期限。 (判断)</p>
+  <label><input type="radio" name="q1" value="正确"> 正确</label>
+  <label><input type="radio" name="q1" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q1')">确认答案</button>
+  <div class="feedback" id="feedback_q1"></div>
+  <div class="analysis" id="analysis_q1">中华人民共和国保守国家秘密法：第二十四条　机关、单位应当每年审核所确定的国家秘密。
+国家秘密的保密期限已满的，自行解密。在保密期限内因保密事项范围调整不再作为国家秘密，或者公开后不会损害国家安全和利益，不需要继续保密的，应当及时解密；需要延长保密期限的，应当在原保密期限届满前重新确定密级、保密期限和知悉范围。提前解密或者延长保密期限的，由原定密机关、单位决定，也可以由其上级机关决定。</div>
+</div>
+
+<div class="question" id="q2">
+  <p>2. 上级机关、单位发现下级机关、单位国家秘密的确定、变更和解除不当的，应当及时通知其纠正，也可以直接纠正。 (判断)</p>
+  <label><input type="radio" name="q2" value="正确"> 正确</label>
+  <label><input type="radio" name="q2" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q2')">确认答案</button>
+  <div class="feedback" id="feedback_q2"></div>
+  <div class="analysis" id="analysis_q2">中华人民共和国保守国家秘密法实施条例：第二十四条　机关、单位发现本机关、本单位国家秘密的确定、变更和解除不当的，应当及时纠正；上级机关、单位发现下级机关、单位国家秘密的确定、变更和解除不当的，应当及时通知其纠正，也可以直接纠正。</div>
+</div>
+
+<div class="question" id="q3">
+  <p>3. 机关、单位确因工作需要，自行销毁少量国家秘密载体的，应当使用符合国家保密标准的销毁设备和方法。 (判断)</p>
+  <label><input type="radio" name="q3" value="正确"> 正确</label>
+  <label><input type="radio" name="q3" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q3')">确认答案</button>
+  <div class="feedback" id="feedback_q3"></div>
+  <div class="analysis" id="analysis_q3">nan</div>
+</div>
+
+<div class="question" id="q4">
+  <p>4. 保密工作是为维护国家安全和利益，依照保密法规定，将国家秘密限制在一定范围和时间内、防止泄露或被非法利用、从而实施的一系列法律手段和管理措施。 (判断)</p>
+  <label><input type="radio" name="q4" value="正确"> 正确</label>
+  <label><input type="radio" name="q4" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q4')">确认答案</button>
+  <div class="feedback" id="feedback_q4"></div>
+  <div class="analysis" id="analysis_q4">nan</div>
+</div>
+
+<div class="question" id="q5">
+  <p>5. 从事涉密业务的人员原则上必须具有中华人民共和国国籍。 (判断)</p>
+  <label><input type="radio" name="q5" value="正确"> 正确</label>
+  <label><input type="radio" name="q5" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q5')">确认答案</button>
+  <div class="feedback" id="feedback_q5"></div>
+  <div class="analysis" id="analysis_q5">nan</div>
+</div>
+
+<div class="question" id="q6">
+  <p>6. 国家秘密及其密级的具体范围，由国家保密行政管理部门单独规定。 (判断)</p>
+  <label><input type="radio" name="q6" value="正确"> 正确</label>
+  <label><input type="radio" name="q6" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q6')">确认答案</button>
+  <div class="feedback" id="feedback_q6"></div>
+  <div class="analysis" id="analysis_q6">中华人民共和国保守国家秘密法：第十五条　国家秘密及其密级的具体范围，由国家保密行政管理部门单独或者会同有关中央国家机关规定。</div>
+</div>
+
+<div class="question" id="q7">
+  <p>7. 机关、单位对所产生的国家秘密，不能确定保密期限的，应当确定解密条件。 (判断)</p>
+  <label><input type="radio" name="q7" value="正确"> 正确</label>
+  <label><input type="radio" name="q7" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q7')">确认答案</button>
+  <div class="feedback" id="feedback_q7"></div>
+  <div class="analysis" id="analysis_q7">nan</div>
+</div>
+
+<div class="question" id="q8">
+  <p>8. 机关、单位开展保密工作所需经费应当列入本机关、本单位的年度财政预算或年度收支计划。 (判断)</p>
+  <label><input type="radio" name="q8" value="正确"> 正确</label>
+  <label><input type="radio" name="q8" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q8')">确认答案</button>
+  <div class="feedback" id="feedback_q8"></div>
+  <div class="analysis" id="analysis_q8">nan</div>
+</div>
+
+<div class="question" id="q9">
+  <p>9. 小李是某研究所涉密岗位员工，因工作岗位的特殊性，其研究成果多不能公开发表，故一直未能评上工程师职称，单位在职称评聘过程中，应充分考虑这一情况体现公平公正。 (判断)</p>
+  <label><input type="radio" name="q9" value="正确"> 正确</label>
+  <label><input type="radio" name="q9" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q9')">确认答案</button>
+  <div class="feedback" id="feedback_q9"></div>
+  <div class="analysis" id="analysis_q9">nan</div>
+</div>
+
+<div class="question" id="q10">
+  <p>10. 维修国家秘密载体，原则上应当由本机关、本单位专门技术人员负责，确需外单位人员维修的，经载体持有人同意后送到外单位进行。 (判断)</p>
+  <label><input type="radio" name="q10" value="正确"> 正确</label>
+  <label><input type="radio" name="q10" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q10')">确认答案</button>
+  <div class="feedback" id="feedback_q10"></div>
+  <div class="analysis" id="analysis_q10">中华人民共和国保守国家秘密法实施条例：第二十七条　国家秘密载体管理应当遵守下列规定：（七）维修国家秘密载体，应当由本机关、本单位专门技术人员负责。确需外单位人员维修的，应当由本机关、本单位的人员现场监督。确需在本机关、本单位以外维修的，应当符合国家保密规定；</div>
+</div>
+
+<div class="question" id="q11">
+  <p>11. 机关单位保密工作机构应当定期对涉密人员进行复审。 (判断)</p>
+  <label><input type="radio" name="q11" value="正确"> 正确</label>
+  <label><input type="radio" name="q11" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q11')">确认答案</button>
+  <div class="feedback" id="feedback_q11"></div>
+  <div class="analysis" id="analysis_q11">中华人民共和国保守国家秘密法实施条例：第五十条　机关、单位应当依法确定涉密岗位，对拟任用、聘用到涉密岗位工作的人员进行上岗前保密审查，确认其是否具备在涉密岗位工作的条件和能力。未通过保密审查的，不得任用、聘用到涉密岗位工作。
+机关、单位组织人事部门负责组织实施保密审查时，拟任用、聘用到涉密岗位工作的人员应当如实提供有关情况；需要其原工作、学习单位以及居住地有关部门和人员配合的，相关单位、部门和人员应当配合。必要时，公安机关、国家安全机关依申请协助审查。
+机关、单位组织人事部门应当定期组织复审，确保涉密人员符合涉密岗位工作要求。</div>
+</div>
+
+<div class="question" id="q12">
+  <p>12. 涉密人员上岗前要经过审查和批准，并接受保密教育培训。 (判断)</p>
+  <label><input type="radio" name="q12" value="正确"> 正确</label>
+  <label><input type="radio" name="q12" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q12')">确认答案</button>
+  <div class="feedback" id="feedback_q12"></div>
+  <div class="analysis" id="analysis_q12">nan</div>
+</div>
+
+<div class="question" id="q13">
+  <p>13. 涉密人员与境外人员结婚或者接受境外机构、组织资助的应当及时向单位报告。 (判断)</p>
+  <label><input type="radio" name="q13" value="正确"> 正确</label>
+  <label><input type="radio" name="q13" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q13')">确认答案</button>
+  <div class="feedback" id="feedback_q13"></div>
+  <div class="analysis" id="analysis_q13">nan</div>
+</div>
+
+<div class="question" id="q14">
+  <p>14. 涉密人员辞职、解聘、调离涉密岗位，应当及时清退保管和使用的国家秘密载体。 (判断)</p>
+  <label><input type="radio" name="q14" value="正确"> 正确</label>
+  <label><input type="radio" name="q14" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q14')">确认答案</button>
+  <div class="feedback" id="feedback_q14"></div>
+  <div class="analysis" id="analysis_q14">nan</div>
+</div>
+
+<div class="question" id="q15">
+  <p>15. 未经审查批准，严禁携带、传递国家秘密载体出境。 (判断)</p>
+  <label><input type="radio" name="q15" value="正确"> 正确</label>
+  <label><input type="radio" name="q15" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q15')">确认答案</button>
+  <div class="feedback" id="feedback_q15"></div>
+  <div class="analysis" id="analysis_q15">nan</div>
+</div>
+
+<div class="question" id="q16">
+  <p>16. 涉密人员脱密期内不得在境外（驻华）机构或外商独资企业工作，但可以为境外组织或人员提供劳务咨询或者其他服务。 (判断)</p>
+  <label><input type="radio" name="q16" value="正确"> 正确</label>
+  <label><input type="radio" name="q16" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q16')">确认答案</button>
+  <div class="feedback" id="feedback_q16"></div>
+  <div class="analysis" id="analysis_q16">根据国家保密规定，涉密人员在脱密期内不得到境外（驻华）机构、组织及外商独资企业工作，不得为境外（驻华）机构、组织、人员及外商独资企业提供劳务、咨询或者其他服务。</div>
+</div>
+
+<div class="question" id="q17">
+  <p>17. 对外科技交流活动不得涉及国家秘密，确需涉及国家秘密的应当履行审批手续。 (判断)</p>
+  <label><input type="radio" name="q17" value="正确"> 正确</label>
+  <label><input type="radio" name="q17" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q17')">确认答案</button>
+  <div class="feedback" id="feedback_q17"></div>
+  <div class="analysis" id="analysis_q17">nan</div>
+</div>
+
+<div class="question" id="q18">
+  <p>18. 机关、单位发现国家秘密已经泄露或者可能泄露的，应当立即采取补救措施。 (判断)</p>
+  <label><input type="radio" name="q18" value="正确"> 正确</label>
+  <label><input type="radio" name="q18" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q18')">确认答案</button>
+  <div class="feedback" id="feedback_q18"></div>
+  <div class="analysis" id="analysis_q18">nan</div>
+</div>
+
+<div class="question" id="q19">
+  <p>19. 国家建立安全保密产品和保密技术装备抽检、复检制度，由国家保密行政管理部门进行检测。 (判断)</p>
+  <label><input type="radio" name="q19" value="正确"> 正确</label>
+  <label><input type="radio" name="q19" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q19')">确认答案</button>
+  <div class="feedback" id="feedback_q19"></div>
+  <div class="analysis" id="analysis_q19">中华人民共和国保守国家秘密法：第三十二条　用于保护国家秘密的安全保密产品和保密技术装备应当符合国家保密规定和标准。
+国家建立安全保密产品和保密技术装备抽检、复检制度，由国家保密行政管理部门设立或者授权的机构进行检测。</div>
+</div>
+
+<div class="question" id="q20">
+  <p>20. 机关、单位对履行职能过程中产生或者获取的不属于国家秘密但泄露后会造成一定不利影响的事项，适用工作秘密管理办法采取必要的保护措施。 (判断)</p>
+  <label><input type="radio" name="q20" value="正确"> 正确</label>
+  <label><input type="radio" name="q20" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q20')">确认答案</button>
+  <div class="feedback" id="feedback_q20"></div>
+  <div class="analysis" id="analysis_q20">nan</div>
+</div>
+
+<div class="question" id="q21">
+  <p>21. 国家采取多种形式加强保密宣传教育，鼓励大众传播媒介面向社会进行保密宣传教育，普及保密知识，宣传保密法治，增强全社会的保密意识。 (判断)</p>
+  <label><input type="radio" name="q21" value="正确"> 正确</label>
+  <label><input type="radio" name="q21" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q21')">确认答案</button>
+  <div class="feedback" id="feedback_q21"></div>
+  <div class="analysis" id="analysis_q21">nan</div>
+</div>
+
+<div class="question" id="q22">
+  <p>22. 绝密级国家秘密载体应当在符合国家保密标准的设施、设备中保存，并指定专人管理。 (判断)</p>
+  <label><input type="radio" name="q22" value="正确"> 正确</label>
+  <label><input type="radio" name="q22" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q22')">确认答案</button>
+  <div class="feedback" id="feedback_q22"></div>
+  <div class="analysis" id="analysis_q22">nan</div>
+</div>
+
+<div class="question" id="q23">
+  <p>23. 未取得保密资质的企业事业单位不能从事涉密业务。 (判断)</p>
+  <label><input type="radio" name="q23" value="正确"> 正确</label>
+  <label><input type="radio" name="q23" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q23')">确认答案</button>
+  <div class="feedback" id="feedback_q23"></div>
+  <div class="analysis" id="analysis_q23">武器装备科研生产单位一级保密资格标准：7.10.1 分包涉密项目，应当选择具有相应保密资格的单位。《武器装备科研生产许可目录》之外的应急或者短期生产秘密级项目，选择非保密资格单位的，分包单位应当按照有关保密规定和程序对承制方进行保密审查，签订保密协议，提出保密要求，履行保密监管责任。</div>
+</div>
+
+<div class="question" id="q24">
+  <p>24. 机关、单位应当在国家秘密产生的同时，由（）依据有关保密事项范围拟定密级、保密期限和知悉范围，报（）审核批准，并采取相应 （）。 (单选)</p>
+  <label><input type="radio" name="q24" value="A"> A. 承办人  定密责任人  保密措施</label><br>
+  <label><input type="radio" name="q24" value="B"> B. 定密责任人  定密小组组长  保密措施</label><br>
+  <label><input type="radio" name="q24" value="C"> C. 承办人  定密小组组长  行政管理措施</label><br>
+  <label><input type="radio" name="q24" value="D"> D. 承办人  定密责任人  行政管理措施</label><br>
+  <button type="button" onclick="checkAnswer('q24')">确认答案</button>
+  <div class="feedback" id="feedback_q24"></div>
+  <div class="analysis" id="analysis_q24">nan</div>
+</div>
+
+<div class="question" id="q25">
+  <p>25. 关于国家秘密载体销毁的程序及有关规定正确的是（）。 (单选)</p>
+  <label><input type="radio" name="q25" value="A"> A. 只要通过本单位主管部门审核批准，可立即进行销毁</label><br>
+  <label><input type="radio" name="q25" value="B"> B. 确因工作需要，自行销毁少量国家秘密载体时，可使用本单位常用的销毁设备和方法进行销毁</label><br>
+  <label><input type="radio" name="q25" value="C"> C. 送销国家秘密载体，应当分类封装，安全运送，如无特殊情况，无需派专人现场监销</label><br>
+  <label><input type="radio" name="q25" value="D"> D. 应将需要销毁的国家秘密载体送交保密行政管理部门设立的销毁工作机构或者保密行政管理部门指定的单位销毁</label><br>
+  <button type="button" onclick="checkAnswer('q25')">确认答案</button>
+  <div class="feedback" id="feedback_q25"></div>
+  <div class="analysis" id="analysis_q25">nan</div>
+</div>
+
+<div class="question" id="q26">
+  <p>26. 在（）情况下,机关单位定密时才可以将有关事项的保密期限确定为长期。 (单选)</p>
+  <label><input type="radio" name="q26" value="A"> A. 法定定密责任人认为有必要的</label><br>
+  <label><input type="radio" name="q26" value="B"> B. 绝密级已满三十年保密期的</label><br>
+  <label><input type="radio" name="q26" value="C"> C. 知悉范围很小的</label><br>
+  <label><input type="radio" name="q26" value="D"> D. 保密事项范围明确规定某一项国家秘密事项保密期限为长期</label><br>
+  <button type="button" onclick="checkAnswer('q26')">确认答案</button>
+  <div class="feedback" id="feedback_q26"></div>
+  <div class="analysis" id="analysis_q26">nan</div>
+</div>
+
+<div class="question" id="q27">
+  <p>27. 机关单位对不明确事项,应当先行拟定密级、保密期限和知悉范围,采取相应的保密措施,并自拟定之日起（）日内报有关部门确定。 (单选)</p>
+  <label><input type="radio" name="q27" value="A"> A. 5</label><br>
+  <label><input type="radio" name="q27" value="B"> B. 10</label><br>
+  <label><input type="radio" name="q27" value="C"> C. 15</label><br>
+  <label><input type="radio" name="q27" value="D"> D. 20</label><br>
+  <button type="button" onclick="checkAnswer('q27')">确认答案</button>
+  <div class="feedback" id="feedback_q27"></div>
+  <div class="analysis" id="analysis_q27">nan</div>
+</div>
+
+<div class="question" id="q28">
+  <p>28. 机关、单位及其工作人员履行（）情况应当纳入年度评和考核内容。 (单选)</p>
+  <label><input type="radio" name="q28" value="A"> A. 保密工作责任制</label><br>
+  <label><input type="radio" name="q28" value="B"> B. 保密经费落实</label><br>
+  <label><input type="radio" name="q28" value="C"> C. 保密承诺</label><br>
+  <label><input type="radio" name="q28" value="D"> D. 保密职能</label><br>
+  <button type="button" onclick="checkAnswer('q28')">确认答案</button>
+  <div class="feedback" id="feedback_q28"></div>
+  <div class="analysis" id="analysis_q28">nan</div>
+</div>
+
+<div class="question" id="q29">
+  <p>29. 复制属于国家秘密的文件、资料和其他物品，或者摘录、引用、汇编属于国家秘密的内容，（）。 (单选)</p>
+  <label><input type="radio" name="q29" value="A"> A. 必须重新确定密级</label><br>
+  <label><input type="radio" name="q29" value="B"> B. 视情况需要可以改变密级</label><br>
+  <label><input type="radio" name="q29" value="C"> C. 既可以保留原件的密级，也可以改变原件的密级</label><br>
+  <label><input type="radio" name="q29" value="D"> D. 不得擅自改变原件的密级</label><br>
+  <button type="button" onclick="checkAnswer('q29')">确认答案</button>
+  <div class="feedback" id="feedback_q29"></div>
+  <div class="analysis" id="analysis_q29">nan</div>
+</div>
+
+<div class="question" id="q30">
+  <p>30. 国家保密标准由（）制定和发布。 (单选)</p>
+  <label><input type="radio" name="q30" value="A"> A. 国家保密行政管理部门</label><br>
+  <label><input type="radio" name="q30" value="B"> B. 国家保密行政管理部门会同国家质量监督行政管理部门</label><br>
+  <label><input type="radio" name="q30" value="C"> C. 国家保密局会同国务院有关部门</label><br>
+  <label><input type="radio" name="q30" value="D"> D. 国务院有关部门</label><br>
+  <button type="button" onclick="checkAnswer('q30')">确认答案</button>
+  <div class="feedback" id="feedback_q30"></div>
+  <div class="analysis" id="analysis_q30">nan</div>
+</div>
+
+<div class="question" id="q31">
+  <p>31. 《中华人民共和国保守国家秘密法实施条例》自（）起实施。 (单选)</p>
+  <label><input type="radio" name="q31" value="A"> A. 2010年10月1日</label><br>
+  <label><input type="radio" name="q31" value="B"> B. 2014年3月1日</label><br>
+  <label><input type="radio" name="q31" value="C"> C. 2014年1月17日</label><br>
+  <label><input type="radio" name="q31" value="D"> D. 2024年9月1日</label><br>
+  <button type="button" onclick="checkAnswer('q31')">确认答案</button>
+  <div class="feedback" id="feedback_q31"></div>
+  <div class="analysis" id="analysis_q31">nan</div>
+</div>
+
+<div class="question" id="q32">
+  <p>32. 涉嫌泄露（）以上的，应以故意泄露国家秘密罪立案。 (单选)</p>
+  <label><input type="radio" name="q32" value="A"> A. 秘密级国家秘密 1 项（件）</label><br>
+  <label><input type="radio" name="q32" value="B"> B. 机密级国家秘密 1 项（件）</label><br>
+  <label><input type="radio" name="q32" value="C"> C. 机密级国家秘密 2 项（件）</label><br>
+  <label><input type="radio" name="q32" value="D"> D. 秘密级国家秘密 2 项（件）</label><br>
+  <button type="button" onclick="checkAnswer('q32')">确认答案</button>
+  <div class="feedback" id="feedback_q32"></div>
+  <div class="analysis" id="analysis_q32">nan</div>
+</div>
+
+<div class="question" id="q33">
+  <p>33. 存储、处理国家秘密的计算机信息系统按照涉密程度实行（）。 (单选)</p>
+  <label><input type="radio" name="q33" value="A"> A. 分级保护</label><br>
+  <label><input type="radio" name="q33" value="B"> B. 分类保护</label><br>
+  <label><input type="radio" name="q33" value="C"> C. 分层保护</label><br>
+  <label><input type="radio" name="q33" value="D"> D. 等级保护</label><br>
+  <button type="button" onclick="checkAnswer('q33')">确认答案</button>
+  <div class="feedback" id="feedback_q33"></div>
+  <div class="analysis" id="analysis_q33">nan</div>
+</div>
+
+<div class="question" id="q34">
+  <p>34. 涉密人员因私出境返回后，应当在（）天内向所在机关单位组织人事部门和保密工作机构报告在国（境）外期间的相关情况。 (单选)</p>
+  <label><input type="radio" name="q34" value="A"> A. 30</label><br>
+  <label><input type="radio" name="q34" value="B"> B. 15</label><br>
+  <label><input type="radio" name="q34" value="C"> C. 10</label><br>
+  <label><input type="radio" name="q34" value="D"> D. 7</label><br>
+  <button type="button" onclick="checkAnswer('q34')">确认答案</button>
+  <div class="feedback" id="feedback_q34"></div>
+  <div class="analysis" id="analysis_q34">nan</div>
+</div>
+
+<div class="question" id="q35">
+  <p>35. 在机关单位确定涉密人员时，下列哪类情况不属于禁止性条件（　）。 (单选)</p>
+  <label><input type="radio" name="q35" value="A"> A. 被开除党籍、军籍、公职的</label><br>
+  <label><input type="radio" name="q35" value="B"> B. 因轻微违纪行为被批评教育的</label><br>
+  <label><input type="radio" name="q35" value="C"> C. 因犯罪受过刑事处罚的</label><br>
+  <label><input type="radio" name="q35" value="D"> D. 因违反保密规定被调离涉密岗位不满2年的</label><br>
+  <button type="button" onclick="checkAnswer('q35')">确认答案</button>
+  <div class="feedback" id="feedback_q35"></div>
+  <div class="analysis" id="analysis_q35">nan</div>
+</div>
+
+<div class="question" id="q36">
+  <p>36. 一般涉密人员因私出境原则上每年不超过（）次。 (单选)</p>
+  <label><input type="radio" name="q36" value="A"> A. 1</label><br>
+  <label><input type="radio" name="q36" value="B"> B. 2</label><br>
+  <label><input type="radio" name="q36" value="C"> C. 3</label><br>
+  <label><input type="radio" name="q36" value="D"> D. 4</label><br>
+  <button type="button" onclick="checkAnswer('q36')">确认答案</button>
+  <div class="feedback" id="feedback_q36"></div>
+  <div class="analysis" id="analysis_q36">nan</div>
+</div>
+
+<div class="question" id="q37">
+  <p>37. 在机关单位中，某岗位近3年内年均产生、办理、接触、使用机密级国家秘密2件、秘密级国家秘密10件，则该岗位应当确定为（）涉密岗位。 (单选)</p>
+  <label><input type="radio" name="q37" value="A"> A. 一般</label><br>
+  <label><input type="radio" name="q37" value="B"> B. 重要</label><br>
+  <label><input type="radio" name="q37" value="C"> C. 机密级</label><br>
+  <label><input type="radio" name="q37" value="D"> D. 秘密级</label><br>
+  <button type="button" onclick="checkAnswer('q37')">确认答案</button>
+  <div class="feedback" id="feedback_q37"></div>
+  <div class="analysis" id="analysis_q37">nan</div>
+</div>
+
+<div class="question" id="q38">
+  <p>38. 关于涉密科研项目管理的保密要求，下列说法不正确的是（）。 (单选)</p>
+  <label><input type="radio" name="q38" value="A"> A. 项目下达单位应做好项目原始定密工作，选择具有相应保密条件的承担单位，与项目承担单位签订保密协议</label><br>
+  <label><input type="radio" name="q38" value="B"> B. 项目承担单位应做好项目密级鉴定工作，与协作配套单位签订保密协议</label><br>
+  <label><input type="radio" name="q38" value="C"> C. 项目承担单位应制定项目各个环节保密制度，采取保密措施、落实保密责任</label><br>
+  <label><input type="radio" name="q38" value="D"> D. 应明确对评审人员的保密要求，加强成果验收、申报奖项、申请专利等工作的保密管理</label><br>
+  <button type="button" onclick="checkAnswer('q38')">确认答案</button>
+  <div class="feedback" id="feedback_q38"></div>
+  <div class="analysis" id="analysis_q38">nan</div>
+</div>
+
+<div class="question" id="q39">
+  <p>39. 销毁国家秘密载体应当履行（）手续，并送交保密行政管理部门设立的销毁工作机构或者保密行政管理部门指定的单位销毁。 (多选)</p>
+  <label><input type="checkbox" name="q39" value="A"> A. 清点</label><br>
+  <label><input type="checkbox" name="q39" value="B"> B. 编号</label><br>
+  <label><input type="checkbox" name="q39" value="C"> C. 登记</label><br>
+  <label><input type="checkbox" name="q39" value="D"> D. 审批</label><br>
+  <button type="button" onclick="checkAnswer('q39')">确认答案</button>
+  <div class="feedback" id="feedback_q39"></div>
+  <div class="analysis" id="analysis_q39">nan</div>
+</div>
+
+<div class="question" id="q40">
+  <p>40. 从事涉密业务的企业事业单位应当具备哪些条件（）。 (多选)</p>
+  <label><input type="checkbox" name="q40" value="A"> A. 在中华人民共和国境内依法成立2年以上的法人，无违法犯罪记录</label><br>
+  <label><input type="checkbox" name="q40" value="B"> B. 从事涉密业务的人员具有中华人民共和国国籍</label><br>
+  <label><input type="checkbox" name="q40" value="C"> C. 保密制度完善，有专门的机构或者人员负责保密工作</label><br>
+  <label><input type="checkbox" name="q40" value="D"> D. 在各自专业领域内能力突出，口碑好</label><br>
+  <button type="button" onclick="checkAnswer('q40')">确认答案</button>
+  <div class="feedback" id="feedback_q40"></div>
+  <div class="analysis" id="analysis_q40">nan</div>
+</div>
+
+<div class="question" id="q41">
+  <p>41. 保密行政管理部门依法对机关、单位执行保密法律法规的下列哪些情况（）进行检查。 (多选)</p>
+  <label><input type="checkbox" name="q41" value="A"> A. 保密制度建设情况</label><br>
+  <label><input type="checkbox" name="q41" value="B"> B. 保密宣传教育培训情况</label><br>
+  <label><input type="checkbox" name="q41" value="C"> C. 涉密人员管理情况</label><br>
+  <label><input type="checkbox" name="q41" value="D"> D. 信息公开保密审查情况</label><br>
+  <button type="button" onclick="checkAnswer('q41')">确认答案</button>
+  <div class="feedback" id="feedback_q41"></div>
+  <div class="analysis" id="analysis_q41">nan</div>
+</div>
+
+<div class="question" id="q42">
+  <p>42. 保密行政管理部门收缴非法获取、持有的国家秘密载体，应当进行登记并出具清单，查清（）等，并采取相应的保密措施。 (多选)</p>
+  <label><input type="checkbox" name="q42" value="A"> A. 来源</label><br>
+  <label><input type="checkbox" name="q42" value="B"> B. 数量</label><br>
+  <label><input type="checkbox" name="q42" value="C"> C. 密级</label><br>
+  <label><input type="checkbox" name="q42" value="D"> D. 扩散范围</label><br>
+  <button type="button" onclick="checkAnswer('q42')">确认答案</button>
+  <div class="feedback" id="feedback_q42"></div>
+  <div class="analysis" id="analysis_q42">nan</div>
+</div>
+
+<div class="question" id="q43">
+  <p>43. 定密责任人在职责范围内承担有关国家秘密确定、变更和解除工作。具体职责是（）。 (多选)</p>
+  <label><input type="checkbox" name="q43" value="A"> A. 审核批准本机关、本单位产生的国家秘密的密级</label><br>
+  <label><input type="checkbox" name="q43" value="B"> B. 对本机关、本单位产生的尚在保密期限内的国家秘密进行审核，作出是否变更或者解除的决定</label><br>
+  <label><input type="checkbox" name="q43" value="C"> C. 对是否属于国家秘密和属于何种密级不明确的事项先行拟定密级，并按照规定的程序报保密行政管理部门确定</label><br>
+  <label><input type="checkbox" name="q43" value="D"> D. 根据工作需要，指定其他人员为定密责任人</label><br>
+  <button type="button" onclick="checkAnswer('q43')">确认答案</button>
+  <div class="feedback" id="feedback_q43"></div>
+  <div class="analysis" id="analysis_q43">nan</div>
+</div>
+
+<div class="question" id="q44">
+  <p>44. 机关单位因执行或者办理已定密事项而产生的事项，符合下列（）情形之一的，应当确定为国家秘密。 (多选)</p>
+  <label><input type="checkbox" name="q44" value="A"> A. 涉及已定密事项密点的</label><br>
+  <label><input type="checkbox" name="q44" value="B"> B. 原定密机关单位对使用已定密事项有明确定密要求的</label><br>
+  <label><input type="checkbox" name="q44" value="C"> C. 对已定密事项进行概括总结、编辑整合、具体细化的</label><br>
+  <label><input type="checkbox" name="q44" value="D"> D. 与已定密事项完全一致的</label><br>
+  <button type="button" onclick="checkAnswer('q44')">确认答案</button>
+  <div class="feedback" id="feedback_q44"></div>
+  <div class="analysis" id="analysis_q44">nan</div>
+</div>
+
+<div class="question" id="q45">
+  <p>45. 涉密人员保密审查的主要内容除了包括个人基本情况外，还包括（）。 (多选)</p>
+  <label><input type="checkbox" name="q45" value="A"> A. 国籍、移居、出境及持有证件情况</label><br>
+  <label><input type="checkbox" name="q45" value="B"> B. 违法、违纪、违规情况</label><br>
+  <label><input type="checkbox" name="q45" value="C"> C. 家庭成员及主要社会关系情况</label><br>
+  <label><input type="checkbox" name="q45" value="D"> D. 受到表彰奖励情况</label><br>
+  <button type="button" onclick="checkAnswer('q45')">确认答案</button>
+  <div class="feedback" id="feedback_q45"></div>
+  <div class="analysis" id="analysis_q45">nan</div>
+</div>
+
+<div class="question" id="q46">
+  <p>46. 以下有关国家秘密载体传递的做法，正确的是（　）。 (多选)</p>
+  <label><input type="checkbox" name="q46" value="A"> A. 在市内传递机密级、秘密级国家秘密载体，通过机要文件交换站进行，也可以派专人送达</label><br>
+  <label><input type="checkbox" name="q46" value="B"> B. 传递国家秘密载体，可由收件机关、单位任一工作人员签收</label><br>
+  <label><input type="checkbox" name="q46" value="C"> C. 送往外地的国家秘密载体，通过机要交通、机要通信进行</label><br>
+  <label><input type="checkbox" name="q46" value="D"> D. 禁止将国家秘密载体邮寄至境外</label><br>
+  <button type="button" onclick="checkAnswer('q46')">确认答案</button>
+  <div class="feedback" id="feedback_q46"></div>
+  <div class="analysis" id="analysis_q46">nan</div>
+</div>
+
+<div class="question" id="q47">
+  <p>47. 国家鼓励和支持保密科学技术研究和应用，提升（）能力，依法保护保密领域的知识产权。 (单选)</p>
+  <label><input type="radio" name="q47" value="A"> A. 安全防护</label><br>
+  <label><input type="radio" name="q47" value="B"> B. 专业技术</label><br>
+  <label><input type="radio" name="q47" value="C"> C. 风险管控</label><br>
+  <label><input type="radio" name="q47" value="D"> D. 自主创新</label><br>
+  <button type="button" onclick="checkAnswer('q47')">确认答案</button>
+  <div class="feedback" id="feedback_q47"></div>
+  <div class="analysis" id="analysis_q47">nan</div>
+</div>
+
+<div class="question" id="q48">
+  <p>48. 国家秘密的知悉范围以外的人员，因工作需要知悉国家秘密的，应当经过（）批准。 (单选)</p>
+  <label><input type="radio" name="q48" value="A"> A. 机关、单位负责人</label><br>
+  <label><input type="radio" name="q48" value="B"> B. 机关、单位定密责任人</label><br>
+  <label><input type="radio" name="q48" value="C"> C. 机关、单位领导</label><br>
+  <label><input type="radio" name="q48" value="D"> D. 机关、单位主要负责人或者其指定的人员</label><br>
+  <button type="button" onclick="checkAnswer('q48')">确认答案</button>
+  <div class="feedback" id="feedback_q48"></div>
+  <div class="analysis" id="analysis_q48">nan</div>
+</div>
+
+<div class="question" id="q49">
+  <p>49. 保密行政管理部门对保密检查和案件调查处理中发现存在泄露国家秘密隐患的，应当要求采取措施，（）；对存在泄露国家秘密隐患的设施、设备、场所，应当责令（）。 (单选)</p>
+  <label><input type="radio" name="q49" value="A"> A. 限期整改
+撤销资格</label><br>
+  <label><input type="radio" name="q49" value="B"> B. 限期整改
+停止使用</label><br>
+  <label><input type="radio" name="q49" value="C"> C. 通报批评
+撤销资格</label><br>
+  <label><input type="radio" name="q49" value="D"> D. 通报批评
+停止使用</label><br>
+  <button type="button" onclick="checkAnswer('q49')">确认答案</button>
+  <div class="feedback" id="feedback_q49"></div>
+  <div class="analysis" id="analysis_q49">nan</div>
+</div>
+
+<div class="question" id="q50">
+  <p>50. 保密事项范围的确定应当遵循（）原则，科学论证评估，并根据情况变化及时调整。 (单选)</p>
+  <label><input type="radio" name="q50" value="A"> A. 统筹、兼顾</label><br>
+  <label><input type="radio" name="q50" value="B"> B. 科学、发展</label><br>
+  <label><input type="radio" name="q50" value="C"> C. 适当、控制</label><br>
+  <label><input type="radio" name="q50" value="D"> D. 必要、合理</label><br>
+  <button type="button" onclick="checkAnswer('q50')">确认答案</button>
+  <div class="feedback" id="feedback_q50"></div>
+  <div class="analysis" id="analysis_q50">nan</div>
+</div>
+
+<div class="question" id="q51">
+  <p>51. 保密工作坚持总体国家安全观，遵循（）、依法管理，积极防范、突出重点，（）、创新发展的原则。 (单选)</p>
+  <label><input type="radio" name="q51" value="A"> A. 党管保密，
+业务融合</label><br>
+  <label><input type="radio" name="q51" value="B"> B. 党管保密，
+技管并重</label><br>
+  <label><input type="radio" name="q51" value="C"> C. 分级负责，
+业务融合</label><br>
+  <label><input type="radio" name="q51" value="D"> D. 分级负责，
+技管并重</label><br>
+  <button type="button" onclick="checkAnswer('q51')">确认答案</button>
+  <div class="feedback" id="feedback_q51"></div>
+  <div class="analysis" id="analysis_q51">nan</div>
+</div>
+
+<div class="question" id="q52">
+  <p>52. 涉密人员离岗离职应当遵守国家保密规定。机关、单位应当开展（），实行脱密期管理。 (多选)</p>
+  <label><input type="checkbox" name="q52" value="A"> A. 保密教育提醒</label><br>
+  <label><input type="checkbox" name="q52" value="B"> B. 清退国家秘密载体</label><br>
+  <label><input type="checkbox" name="q52" value="C"> C. 撤销人员备案</label><br>
+  <label><input type="checkbox" name="q52" value="D"> D. 归还因私证照</label><br>
+  <button type="button" onclick="checkAnswer('q52')">确认答案</button>
+  <div class="feedback" id="feedback_q52"></div>
+  <div class="analysis" id="analysis_q52">nan</div>
+</div>
+
+<div class="question" id="q53">
+  <p>53. 保密工作应当遵循既确保国家秘密安全，又便利信息资源合理利用。 (判断)</p>
+  <label><input type="radio" name="q53" value="正确"> 正确</label>
+  <label><input type="radio" name="q53" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q53')">确认答案</button>
+  <div class="feedback" id="feedback_q53"></div>
+  <div class="analysis" id="analysis_q53">nan</div>
+</div>
+
+<div class="question" id="q54">
+  <p>54. 国家秘密是（），依照法定程序确定，在一定时间内只限一定范围的人员知悉的事项。 (单选)</p>
+  <label><input type="radio" name="q54" value="A"> A. 关系单位安全和利益</label><br>
+  <label><input type="radio" name="q54" value="B"> B. 关系国家安全和利益</label><br>
+  <label><input type="radio" name="q54" value="C"> C. 关系公民个人安全和利益</label><br>
+  <label><input type="radio" name="q54" value="D"> D. 关系地区安全和利益</label><br>
+  <button type="button" onclick="checkAnswer('q54')">确认答案</button>
+  <div class="feedback" id="feedback_q54"></div>
+  <div class="analysis" id="analysis_q54">nan</div>
+</div>
+
+<div class="question" id="q55">
+  <p>55. 保密工作的基本内容有（）。 (多选)</p>
+  <label><input type="checkbox" name="q55" value="A"> A. 保密法治建设</label><br>
+  <label><input type="checkbox" name="q55" value="B"> B. 保密宣传教育培训</label><br>
+  <label><input type="checkbox" name="q55" value="C"> C. 保密监督检查</label><br>
+  <label><input type="checkbox" name="q55" value="D"> D. 保密科技管理</label><br>
+  <button type="button" onclick="checkAnswer('q55')">确认答案</button>
+  <div class="feedback" id="feedback_q55"></div>
+  <div class="analysis" id="analysis_q55">nan</div>
+</div>
+
+<div class="question" id="q56">
+  <p>56. 国家秘密区别于工作秘密、商业秘密的关键是按照法定程序确定。 (判断)</p>
+  <label><input type="radio" name="q56" value="正确"> 正确</label>
+  <label><input type="radio" name="q56" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q56')">确认答案</button>
+  <div class="feedback" id="feedback_q56"></div>
+  <div class="analysis" id="analysis_q56">国家秘密关系国家安全和利益，是其区别于工作秘密、商业秘密的关键。</div>
+</div>
+
+<div class="question" id="q57">
+  <p>57. （）是党中央统一领导党政军保密工作的领导机构。 (单选)</p>
+  <label><input type="radio" name="q57" value="A"> A. 国家保密局</label><br>
+  <label><input type="radio" name="q57" value="B"> B. 国家安全委员会</label><br>
+  <label><input type="radio" name="q57" value="C"> C. 中央保密委员会办公室</label><br>
+  <label><input type="radio" name="q57" value="D"> D. 中央保密委员会</label><br>
+  <button type="button" onclick="checkAnswer('q57')">确认答案</button>
+  <div class="feedback" id="feedback_q57"></div>
+  <div class="analysis" id="analysis_q57">nan</div>
+</div>
+
+<div class="question" id="q58">
+  <p>58. 下列不属于我国保密法律制度体系的是（）。 (单选)</p>
+  <label><input type="radio" name="q58" value="A"> A. 保密法</label><br>
+  <label><input type="radio" name="q58" value="B"> B. 公司法</label><br>
+  <label><input type="radio" name="q58" value="C"> C. 国家保密标准</label><br>
+  <label><input type="radio" name="q58" value="D"> D. 相关司法解释</label><br>
+  <button type="button" onclick="checkAnswer('q58')">确认答案</button>
+  <div class="feedback" id="feedback_q58"></div>
+  <div class="analysis" id="analysis_q58">nan</div>
+</div>
+
+<div class="question" id="q59">
+  <p>59. 我国保密法律制度体系以（）为核心。 (单选)</p>
+  <label><input type="radio" name="q59" value="A"> A. 宪法</label><br>
+  <label><input type="radio" name="q59" value="B"> B. 刑法</label><br>
+  <label><input type="radio" name="q59" value="C"> C. 保密法</label><br>
+  <label><input type="radio" name="q59" value="D"> D. 中国共产党章程</label><br>
+  <button type="button" onclick="checkAnswer('q59')">确认答案</button>
+  <div class="feedback" id="feedback_q59"></div>
+  <div class="analysis" id="analysis_q59">nan</div>
+</div>
+
+<div class="question" id="q60">
+  <p>60. 在保密工作手段上，要积极建立（）的综合防范体系，不断提高发现和消除泄密隐患和风险的能力。 (单选)</p>
+  <label><input type="radio" name="q60" value="A"> A. 攻防一体</label><br>
+  <label><input type="radio" name="q60" value="B"> B. 专兼结合</label><br>
+  <label><input type="radio" name="q60" value="C"> C. 知己知彼</label><br>
+  <label><input type="radio" name="q60" value="D"> D. “人防、物防、技防”三位一体</label><br>
+  <button type="button" onclick="checkAnswer('q60')">确认答案</button>
+  <div class="feedback" id="feedback_q60"></div>
+  <div class="analysis" id="analysis_q60">nan</div>
+</div>
+
+<div class="question" id="q61">
+  <p>61. 国家秘密的密级分为（）。 (单选)</p>
+  <label><input type="radio" name="q61" value="A"> A. 绝密、机密、秘密三级</label><br>
+  <label><input type="radio" name="q61" value="B"> B. 绝密和机密两级</label><br>
+  <label><input type="radio" name="q61" value="C"> C. 秘密、机密、内部三级</label><br>
+  <label><input type="radio" name="q61" value="D"> D. 绝密、机密、秘密、重要四级</label><br>
+  <button type="button" onclick="checkAnswer('q61')">确认答案</button>
+  <div class="feedback" id="feedback_q61"></div>
+  <div class="analysis" id="analysis_q61">nan</div>
+</div>
+
+<div class="question" id="q62">
+  <p>62. 国家秘密的保密期限，除另有规定外，机密级不超过（）年。 (单选)</p>
+  <label><input type="radio" name="q62" value="A"> A. 10</label><br>
+  <label><input type="radio" name="q62" value="B"> B. 15</label><br>
+  <label><input type="radio" name="q62" value="C"> C. 20</label><br>
+  <label><input type="radio" name="q62" value="D"> D. 25</label><br>
+  <button type="button" onclick="checkAnswer('q62')">确认答案</button>
+  <div class="feedback" id="feedback_q62"></div>
+  <div class="analysis" id="analysis_q62">nan</div>
+</div>
+
+<div class="question" id="q63">
+  <p>63. 新修订《中华人民共和国保守国家保密法》共有6章65条，分别是总则、国家秘密的范围和密级、（）、监督管理、法律责任、附则。 (单选)</p>
+  <label><input type="radio" name="q63" value="A"> A. 保密原则</label><br>
+  <label><input type="radio" name="q63" value="B"> B. 保密制度</label><br>
+  <label><input type="radio" name="q63" value="C"> C. 保密检查</label><br>
+  <label><input type="radio" name="q63" value="D"> D. 保密法制</label><br>
+  <button type="button" onclick="checkAnswer('q63')">确认答案</button>
+  <div class="feedback" id="feedback_q63"></div>
+  <div class="analysis" id="analysis_q63">nan</div>
+</div>
+
+<div class="question" id="q64">
+  <p>64. 《中华人民共和国保守国家保密法》的立法依据是（　）。 (单选)</p>
+  <label><input type="radio" name="q64" value="A"> A. 宪法</label><br>
+  <label><input type="radio" name="q64" value="B"> B. 刑法</label><br>
+  <label><input type="radio" name="q64" value="C"> C. 党和国家领导人的指示</label><br>
+  <label><input type="radio" name="q64" value="D"> D. 党章</label><br>
+  <button type="button" onclick="checkAnswer('q64')">确认答案</button>
+  <div class="feedback" id="feedback_q64"></div>
+  <div class="analysis" id="analysis_q64">nan</div>
+</div>
+
+<div class="question" id="q65">
+  <p>65. 2024年2月27日，国家主席习近平签署第20号主席令，公布了第十四届全国人大常委会第八次会议修订通过的《中华人民共和国保守国家秘密法》，自（    ）起施行。 (单选)</p>
+  <label><input type="radio" name="q65" value="A"> A. 2024年3月15日</label><br>
+  <label><input type="radio" name="q65" value="B"> B. 2024年5月1日</label><br>
+  <label><input type="radio" name="q65" value="C"> C. 2024年7月15日</label><br>
+  <label><input type="radio" name="q65" value="D"> D. 2024年9月1日</label><br>
+  <button type="button" onclick="checkAnswer('q65')">确认答案</button>
+  <div class="feedback" id="feedback_q65"></div>
+  <div class="analysis" id="analysis_q65">nan</div>
+</div>
+
+<div class="question" id="q66">
+  <p>66. 2024年新修订《中华人民共和国保守国家秘密法》共有（    ）。 (单选)</p>
+  <label><input type="radio" name="q66" value="A"> A. 5章53条</label><br>
+  <label><input type="radio" name="q66" value="B"> B. 5章63条</label><br>
+  <label><input type="radio" name="q66" value="C"> C. 6章53条</label><br>
+  <label><input type="radio" name="q66" value="D"> D. 6章65条</label><br>
+  <button type="button" onclick="checkAnswer('q66')">确认答案</button>
+  <div class="feedback" id="feedback_q66"></div>
+  <div class="analysis" id="analysis_q66">nan</div>
+</div>
+
+<div class="question" id="q67">
+  <p>67. 2024年新修订保密法在草案征求意见过程中，有关定密、解密的规定始终备受关注。本次修订从（   ）方面完善了定密、解密制度。 (多选)</p>
+  <label><input type="checkbox" name="q67" value="A"> A. 增强条文的周延性和实践中的可操作性</label><br>
+  <label><input type="checkbox" name="q67" value="B"> B. 明确保密事项范围的确定应当遵循必要、合理原则</label><br>
+  <label><input type="checkbox" name="q67" value="C"> C. 完善定密责任人制度和定密授权机制</label><br>
+  <label><input type="checkbox" name="q67" value="D"> D. 将国家秘密审核由定期审核修改为每年审核</label><br>
+  <button type="button" onclick="checkAnswer('q67')">确认答案</button>
+  <div class="feedback" id="feedback_q67"></div>
+  <div class="analysis" id="analysis_q67">nan</div>
+</div>
+
+<div class="question" id="q68">
+  <p>68. 信息化、数字化条件下国家秘密管理难度不断加大，2024年新修订的保密法从（   ）方面完善了网络信息、数据保密管理。 (多选)</p>
+  <label><input type="checkbox" name="q68" value="A"> A. 加强与数据安全法的协同衔接</label><br>
+  <label><input type="checkbox" name="q68" value="B"> B. 新增涉密数据管理及汇聚、关联后涉及国家秘密数据管理的原则规定</label><br>
+  <label><input type="checkbox" name="q68" value="C"> C. 明确网络信息的制作、复制等各个环节均应当遵守国家保密规定</label><br>
+  <label><input type="checkbox" name="q68" value="D"> D. 规定网络运营者应当配合有关部门对涉嫌泄露国家秘密案件进行调查处理</label><br>
+  <button type="button" onclick="checkAnswer('q68')">确认答案</button>
+  <div class="feedback" id="feedback_q68"></div>
+  <div class="analysis" id="analysis_q68">nan</div>
+</div>
+
+<div class="question" id="q69">
+  <p>69. 2024年新修订《中华人民共和国保守国家秘密法》第一条规定，为了保守国家秘密，维护国家安全和利益，保障改革开放和社会主义现代化建设事业的顺利进行，根据（    ），制定本法。 (单选)</p>
+  <label><input type="radio" name="q69" value="A"> A. 宪法</label><br>
+  <label><input type="radio" name="q69" value="B"> B. 刑法</label><br>
+  <label><input type="radio" name="q69" value="C"> C. 行政法</label><br>
+  <label><input type="radio" name="q69" value="D"> D. 党章</label><br>
+  <button type="button" onclick="checkAnswer('q69')">确认答案</button>
+  <div class="feedback" id="feedback_q69"></div>
+  <div class="analysis" id="analysis_q69">nan</div>
+</div>
+
+<div class="question" id="q70">
+  <p>70. 2024年新修订《中华人民共和国保守国家秘密法》第二十八条规定，机关、单位应当加强对国家秘密载体的管理，任何组织和个人不得有下列哪些行为（    ）。 (多选)</p>
+  <label><input type="checkbox" name="q70" value="A"> A. 买卖、转送或者私自销毁国家秘密载体</label><br>
+  <label><input type="checkbox" name="q70" value="B"> B. 通过普通邮政、快递等无保密措施的渠道传递国家秘密载体</label><br>
+  <label><input type="checkbox" name="q70" value="C"> C. 寄递、托运国家秘密载体出境</label><br>
+  <label><input type="checkbox" name="q70" value="D"> D. 未经有关主管部门批准，携带、传递国家秘密载体出境</label><br>
+  <button type="button" onclick="checkAnswer('q70')">确认答案</button>
+  <div class="feedback" id="feedback_q70"></div>
+  <div class="analysis" id="analysis_q70">nan</div>
+</div>
+
+<div class="question" id="q71">
+  <p>71. 2024年新修订《中华人民共和国保守国家秘密法》第三十一条规定，机关、单位应当加强对信息系统、信息设备的保密管理，建设保密自监管设施，及时发现并处置安全保密风险隐患。任何组织和个人不得有下列哪些行为（    ）。 (多选)</p>
+  <label><input type="checkbox" name="q71" value="A"> A. 擅自卸载、修改涉密信息系统的安全技术程序、管理程序</label><br>
+  <label><input type="checkbox" name="q71" value="B"> B. 使用非涉密信息系统、非涉密信息设备存储或者处理国家秘密</label><br>
+  <label><input type="checkbox" name="q71" value="C"> C. 将未经安全技术处理的退出使用的涉密信息设备赠送、出售、丢弃或者改作其他用途</label><br>
+  <label><input type="checkbox" name="q71" value="D"> D. 将涉密信息系统、涉密信息设备接入互联网及其他公共信息网络</label><br>
+  <button type="button" onclick="checkAnswer('q71')">确认答案</button>
+  <div class="feedback" id="feedback_q71"></div>
+  <div class="analysis" id="analysis_q71">nan</div>
+</div>
+
+<div class="question" id="q72">
+  <p>72. 2024年新修订《中华人民共和国保守国家秘密法》第三十五条规定，机关、单位应该依法对拟公开的信息进行（    ），遵守国家保密规定。 (单选)</p>
+  <label><input type="radio" name="q72" value="A"> A. 依法保密</label><br>
+  <label><input type="radio" name="q72" value="B"> B. 依法公开</label><br>
+  <label><input type="radio" name="q72" value="C"> C. 保密审查</label><br>
+  <label><input type="radio" name="q72" value="D"> D. 精准保护</label><br>
+  <button type="button" onclick="checkAnswer('q72')">确认答案</button>
+  <div class="feedback" id="feedback_q72"></div>
+  <div class="analysis" id="analysis_q72">nan</div>
+</div>
+
+<div class="question" id="q73">
+  <p>73. 2024年新修订《中华人民共和国保守国家秘密法》第五十七条规定，以下哪些属于违法行为，将根据情节轻重依法给予处分（   ）。 (多选)</p>
+  <label><input type="checkbox" name="q73" value="A"> A. 非法获取、持有国家秘密载体的</label><br>
+  <label><input type="checkbox" name="q73" value="B"> B. 在私人交往和通信中涉及国家秘密的</label><br>
+  <label><input type="checkbox" name="q73" value="C"> C. 非法复制、记录、存储国家秘密的</label><br>
+  <label><input type="checkbox" name="q73" value="D"> D. 未按照国家保密规定和标准采取有效保密措施，将涉密信息系统、涉密信息设备接入互联网及其他公共信息网络的</label><br>
+  <button type="button" onclick="checkAnswer('q73')">确认答案</button>
+  <div class="feedback" id="feedback_q73"></div>
+  <div class="analysis" id="analysis_q73">nan</div>
+</div>
+
+<div class="question" id="q74">
+  <p>74. 定密授权要以授权机关的名义作出，不一定采取书面形式，但需要通知到被授权机关。( ） (判断)</p>
+  <label><input type="radio" name="q74" value="正确"> 正确</label>
+  <label><input type="radio" name="q74" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q74')">确认答案</button>
+  <div class="feedback" id="feedback_q74"></div>
+  <div class="analysis" id="analysis_q74">中华人民共和国保守国家秘密法实施条例：第十六条　中央国家机关、省级机关以及设区的市级机关可以根据保密工作需要或者有关机关、单位申请，在国家保密行政管理部门规定的定密权限、授权范围内作出定密授权。
+无法按照前款规定授权的，省级以上保密行政管理部门可以根据保密工作需要或者有关机关、单位申请，作出定密授权。
+定密授权应当以书面形式作出。授权机关应当对被授权机关、单位履行定密授权的情况进行监督。被授权机关、单位不得再授权。</div>
+</div>
+
+<div class="question" id="q75">
+  <p>75. 国家秘密的密级分为机密、秘密两级。 (判断)</p>
+  <label><input type="radio" name="q75" value="正确"> 正确</label>
+  <label><input type="radio" name="q75" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q75')">确认答案</button>
+  <div class="feedback" id="feedback_q75"></div>
+  <div class="analysis" id="analysis_q75">中华人民共和国保守国家秘密法：第十四条　国家秘密的密级分为绝密、机密、秘密三级。绝密级国家秘密是最重要的国家秘密，泄露会使国家安全和利益遭受特别严重的损害；机密级国家秘密是重要的国家秘密，泄露会使国家安全和利益遭受严重的损害；秘密级国家秘密是一般的国家秘密，泄露会使国家安全和利益遭受损害。</div>
+</div>
+
+<div class="question" id="q76">
+  <p>76. 机关、单位应当依法对拟公开的信息进行保密审查，遵守国家保密规定。 (判断)</p>
+  <label><input type="radio" name="q76" value="正确"> 正确</label>
+  <label><input type="radio" name="q76" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q76')">确认答案</button>
+  <div class="feedback" id="feedback_q76"></div>
+  <div class="analysis" id="analysis_q76">nan</div>
+</div>
+
+<div class="question" id="q77">
+  <p>77. 涉密人员脱密期自批准涉密人员离岗离职之日起计算，重要涉密人员脱密期不少于1年。 (判断)</p>
+  <label><input type="radio" name="q77" value="正确"> 正确</label>
+  <label><input type="radio" name="q77" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q77')">确认答案</button>
+  <div class="feedback" id="feedback_q77"></div>
+  <div class="analysis" id="analysis_q77">根据国家保密规定，核心涉密人员的脱密期为3年，重要涉密人员的脱密期为2年，一般涉密人员的脱密期为1年；有其他特殊要求的，从其规定。</div>
+</div>
+
+<div class="question" id="q78">
+  <p>78. 国家秘密的密级、保密期限和知悉范围变更的，应当及时电话通知知悉范围内的机关、单位或者人员。 (判断)</p>
+  <label><input type="radio" name="q78" value="正确"> 正确</label>
+  <label><input type="radio" name="q78" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q78')">确认答案</button>
+  <div class="feedback" id="feedback_q78"></div>
+  <div class="analysis" id="analysis_q78">中华人民共和国保守国家秘密法：第二十三条　国家秘密的密级、保密期限和知悉范围，应当根据情况变化及时变更。国家秘密的密级、保密期限和知悉范围的变更，由原定密机关、单位决定，也可以由其上级机关决定。
+国家秘密的密级、保密期限和知悉范围变更的，应当及时书面通知知悉范围内的机关、单位或者人员。</div>
+</div>
+
+<div class="question" id="q79">
+  <p>79. 机关、单位对是否属于国家秘密或者属于何种密级不明确或者有争议的，由国家保密行政管理部门或者省、自治区、直辖市保密行政管理部门确定。 (判断)</p>
+  <label><input type="radio" name="q79" value="正确"> 正确</label>
+  <label><input type="radio" name="q79" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q79')">确认答案</button>
+  <div class="feedback" id="feedback_q79"></div>
+  <div class="analysis" id="analysis_q79">nan</div>
+</div>
+
+<div class="question" id="q80">
+  <p>80. 中央国家机关、省级机关及其授权的机关、单位可以确定绝密级、机密级和秘密级国家秘密 (判断)</p>
+  <label><input type="radio" name="q80" value="正确"> 正确</label>
+  <label><input type="radio" name="q80" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q80')">确认答案</button>
+  <div class="feedback" id="feedback_q80"></div>
+  <div class="analysis" id="analysis_q80">nan</div>
+</div>
+
+<div class="question" id="q81">
+  <p>81. 国家对在维护国家安全工作中作出突出贡献的个人和组织只能给予表彰。 (判断)</p>
+  <label><input type="radio" name="q81" value="正确"> 正确</label>
+  <label><input type="radio" name="q81" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q81')">确认答案</button>
+  <div class="feedback" id="feedback_q81"></div>
+  <div class="analysis" id="analysis_q81">中华人民共和国国家安全法：第十二条 国家对在维护国家安全工作中作出突出贡献的个人和组织给予表彰和奖励。</div>
+</div>
+
+<div class="question" id="q82">
+  <p>82. 国家依法采取必要措施，保护海外中国公民、组织和机构的安全和正当利益，保护国家的海外利益不受威胁和侵害。 (判断)</p>
+  <label><input type="radio" name="q82" value="正确"> 正确</label>
+  <label><input type="radio" name="q82" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q82')">确认答案</button>
+  <div class="feedback" id="feedback_q82"></div>
+  <div class="analysis" id="analysis_q82">nan</div>
+</div>
+
+<div class="question" id="q83">
+  <p>83. 国家安全法规定国家安全威胁和危害得到控制或者消除后，应当于三个月之后解除管控处置措施，做好善后工作。 (判断)</p>
+  <label><input type="radio" name="q83" value="正确"> 正确</label>
+  <label><input type="radio" name="q83" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q83')">确认答案</button>
+  <div class="feedback" id="feedback_q83"></div>
+  <div class="analysis" id="analysis_q83">中华人民共和国国家安全法：第六十八条 国家安全威胁和危害得到控制或者消除后，应当及时解除管控处置措施，做好善后工作。</div>
+</div>
+
+<div class="question" id="q84">
+  <p>84. 维护国家安全是头等大事，不一定与经济社会发展相协调。 (判断)</p>
+  <label><input type="radio" name="q84" value="正确"> 正确</label>
+  <label><input type="radio" name="q84" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q84')">确认答案</button>
+  <div class="feedback" id="feedback_q84"></div>
+  <div class="analysis" id="analysis_q84">中华人民共和国国家安全法：第一条 为了维护国家安全，保卫人民民主专政的政权和中国特色社会主义制度，保护人民的根本利益，保障改革开放和社会主义现代化建设的顺利进行，实现中华民族伟大复兴，根据宪法，制定本法。</div>
+</div>
+
+<div class="question" id="q85">
+  <p>85. 因支持、协助国家安全工作，本人或者其近亲属的人身安全面临危险的，可以向公安机关、国家安全机关请求予以保护。 (判断)</p>
+  <label><input type="radio" name="q85" value="正确"> 正确</label>
+  <label><input type="radio" name="q85" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q85')">确认答案</button>
+  <div class="feedback" id="feedback_q85"></div>
+  <div class="analysis" id="analysis_q85">nan</div>
+</div>
+
+<div class="question" id="q86">
+  <p>86. 国家安全机关在侦破某涉嫌危害国家安全犯罪案件中，对某单位员工采取强制措施时，该单位以此人系商业秘密知情人员为由拒绝协助配合。 (判断)</p>
+  <label><input type="radio" name="q86" value="正确"> 正确</label>
+  <label><input type="radio" name="q86" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q86')">确认答案</button>
+  <div class="feedback" id="feedback_q86"></div>
+  <div class="analysis" id="analysis_q86">中华人民共和国国家安全法：第七十九条 企业事业组织根据国家安全工作的要求，应当配合有关部门采取相关安全措施。</div>
+</div>
+
+<div class="question" id="q87">
+  <p>87. 鼓励国家安全领域科技创新，发挥科技在维护国家安全中的作用。 (判断)</p>
+  <label><input type="radio" name="q87" value="正确"> 正确</label>
+  <label><input type="radio" name="q87" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q87')">确认答案</button>
+  <div class="feedback" id="feedback_q87"></div>
+  <div class="analysis" id="analysis_q87">nan</div>
+</div>
+
+<div class="question" id="q88">
+  <p>88. 公民和组织因支持、协助国家安全工作导致财产损失的，按照国家有关规定给予补偿。 (判断)</p>
+  <label><input type="radio" name="q88" value="正确"> 正确</label>
+  <label><input type="radio" name="q88" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q88')">确认答案</button>
+  <div class="feedback" id="feedback_q88"></div>
+  <div class="analysis" id="analysis_q88">nan</div>
+</div>
+
+<div class="question" id="q89">
+  <p>89. 国家建立国家安全工作督促检查和责任追究机制，确保国家安全战略和重大部署贯彻落实。 (判断)</p>
+  <label><input type="radio" name="q89" value="正确"> 正确</label>
+  <label><input type="radio" name="q89" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q89')">确认答案</button>
+  <div class="feedback" id="feedback_q89"></div>
+  <div class="analysis" id="analysis_q89">nan</div>
+</div>
+
+<div class="question" id="q90">
+  <p>90. 在国家安全工作中，需要采取限制公民权利和自由的特别措施时，应当依法进行，并以维护国家安全的实际需要为限度。 (判断)</p>
+  <label><input type="radio" name="q90" value="正确"> 正确</label>
+  <label><input type="radio" name="q90" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q90')">确认答案</button>
+  <div class="feedback" id="feedback_q90"></div>
+  <div class="analysis" id="analysis_q90">nan</div>
+</div>
+
+<div class="question" id="q91">
+  <p>91. 国家安全机关工作人员依法执行反间谍工作任务时，有关个人和组织可以根据实际情况决定是否予以配合。 (判断)</p>
+  <label><input type="radio" name="q91" value="正确"> 正确</label>
+  <label><input type="radio" name="q91" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q91')">确认答案</button>
+  <div class="feedback" id="feedback_q91"></div>
+  <div class="analysis" id="analysis_q91">中华人民共和国国家安全法：第七十九条 企业事业组织根据国家安全工作的要求，应当配合有关部门采取相关安全措施。</div>
+</div>
+
+<div class="question" id="q92">
+  <p>92. 任何公民和组织发现间谍行为，应当及时向国家安全机关举报；向公安机关等其他国家机关、组织举报的，相关国家机关、组织应当立即移送国家安全机关处理。 (判断)</p>
+  <label><input type="radio" name="q92" value="正确"> 正确</label>
+  <label><input type="radio" name="q92" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q92')">确认答案</button>
+  <div class="feedback" id="feedback_q92"></div>
+  <div class="analysis" id="analysis_q92">nan</div>
+</div>
+
+<div class="question" id="q93">
+  <p>93. 国家安全机关根据反间谍工作需要，对存在隐患的部门，经过严格的批准手续，可以进行反间谍技术防范检查和检测。 (判断)</p>
+  <label><input type="radio" name="q93" value="正确"> 正确</label>
+  <label><input type="radio" name="q93" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q93')">确认答案</button>
+  <div class="feedback" id="feedback_q93"></div>
+  <div class="analysis" id="analysis_q93">nan</div>
+</div>
+
+<div class="question" id="q94">
+  <p>94. 国家安全机关因反间谍工作需要，根据国家有关规定，可以设置相关工作场所和设施设备，任务完成后应当及时归还或者恢复原状，不需要支付相应费用。 (判断)</p>
+  <label><input type="radio" name="q94" value="正确"> 正确</label>
+  <label><input type="radio" name="q94" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q94')">确认答案</button>
+  <div class="feedback" id="feedback_q94"></div>
+  <div class="analysis" id="analysis_q94">中华人民共和国反间谍法：第四十四条   国家安全机关因反间谍工作需要，根据国家有关规定，可以优先使用或者依法征用国家机关、人民团体、企业事业组织和其他社会组织以及个人的交通工具、通信工具、场地和建筑物等，必要时可以设置相关工作场所和设施设备，任务完成后应当及时归还或者恢复原状，并依照规定支付相应费用；造成损失的，应当给予补偿。</div>
+</div>
+
+<div class="question" id="q95">
+  <p>95. 对支持、协助国家安全机关工作或者依法检举、控告的个人和组织，任何个人和组织不得压制和打击报复。 (判断)</p>
+  <label><input type="radio" name="q95" value="正确"> 正确</label>
+  <label><input type="radio" name="q95" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q95')">确认答案</button>
+  <div class="feedback" id="feedback_q95"></div>
+  <div class="analysis" id="analysis_q95">nan</div>
+</div>
+
+<div class="question" id="q96">
+  <p>96. 参加了间谍组织，但没有进行间谍活动，不构成危害国家安全的行为。 (判断)</p>
+  <label><input type="radio" name="q96" value="正确"> 正确</label>
+  <label><input type="radio" name="q96" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q96')">确认答案</button>
+  <div class="feedback" id="feedback_q96"></div>
+  <div class="analysis" id="analysis_q96">中华人民共和国反间谍法：第四条   本法所称间谍行为，是指下列行为：
+（二）参加间谍组织或者接受间谍组织及其代理人的任务，或者投靠间谍组织及其代理人；</div>
+</div>
+
+<div class="question" id="q97">
+  <p>97. 根据《中华人民共和国反间谍法》规定，国家安全机关依法收缴的罚款以及没收的财物，一律上缴国库。 (判断)</p>
+  <label><input type="radio" name="q97" value="正确"> 正确</label>
+  <label><input type="radio" name="q97" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q97')">确认答案</button>
+  <div class="feedback" id="feedback_q97"></div>
+  <div class="analysis" id="analysis_q97">nan</div>
+</div>
+
+<div class="question" id="q98">
+  <p>98. 在国家安全机关调查了解有关间谍行为的情况、收集有关证据时，有关个人和组织应当如实提供，不得拒绝。 (判断)</p>
+  <label><input type="radio" name="q98" value="正确"> 正确</label>
+  <label><input type="radio" name="q98" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q98')">确认答案</button>
+  <div class="feedback" id="feedback_q98"></div>
+  <div class="analysis" id="analysis_q98">nan</div>
+</div>
+
+<div class="question" id="q99">
+  <p>99. 对入境后可能进行危害中华人民共和国国家安全活动的境外人员，国务院国家安全主管部门可以通知移民管理机构不准其入境。 (判断)</p>
+  <label><input type="radio" name="q99" value="正确"> 正确</label>
+  <label><input type="radio" name="q99" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q99')">确认答案</button>
+  <div class="feedback" id="feedback_q99"></div>
+  <div class="analysis" id="analysis_q99">nan</div>
+</div>
+
+<div class="question" id="q100">
+  <p>100. 为了加强反间谍工作，防范、制止和惩治间谍行为，维护国家安全，保护人民利益，根据《中华人民共和国国家安全法》，制定《中华人民共和国反间谍法》。 (判断)</p>
+  <label><input type="radio" name="q100" value="正确"> 正确</label>
+  <label><input type="radio" name="q100" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q100')">确认答案</button>
+  <div class="feedback" id="feedback_q100"></div>
+  <div class="analysis" id="analysis_q100">中华人民共和国反间谍法：第一条   为了加强反间谍工作，防范、制止和惩治间谍行为，维护国家安全，保护人民利益，根据宪法，制定本法。</div>
+</div>
+
+<div class="question" id="q101">
+  <p>101. 国家鼓励和支持密码科学技术研究和应用，依法保护密码领域的知识产权，促进密码科学技术进步和创新。 (判断)</p>
+  <label><input type="radio" name="q101" value="正确"> 正确</label>
+  <label><input type="radio" name="q101" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q101')">确认答案</button>
+  <div class="feedback" id="feedback_q101"></div>
+  <div class="analysis" id="analysis_q101">nan</div>
+</div>
+
+<div class="question" id="q102">
+  <p>102. 核心密码、普通密码、商用密码都属于国家秘密。 (判断)</p>
+  <label><input type="radio" name="q102" value="正确"> 正确</label>
+  <label><input type="radio" name="q102" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q102')">确认答案</button>
+  <div class="feedback" id="feedback_q102"></div>
+  <div class="analysis" id="analysis_q102">中华人民共和国密码法：第七条　核心密码、普通密码用于保护国家秘密信息，核心密码保护信息的最高密级为绝密级，普通密码保护信息的最高密级为机密级。
+核心密码、普通密码属于国家秘密。密码管理部门依照本法和有关法律、行政法规、国家有关规定对核心密码、普通密码实行严格统一管理。</div>
+</div>
+
+<div class="question" id="q103">
+  <p>103. 密码管理部门依法对密码工作机构的核心密码、普通密码、商用密码进行指导、监督和检查。 (判断)</p>
+  <label><input type="radio" name="q103" value="正确"> 正确</label>
+  <label><input type="radio" name="q103" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q103')">确认答案</button>
+  <div class="feedback" id="feedback_q103"></div>
+  <div class="analysis" id="analysis_q103">中华人民共和国密码法：第十六条　密码管理部门依法对密码工作机构的核心密码、普通密码工作进行指导、监督和检查，密码工作机构应当配合。</div>
+</div>
+
+<div class="question" id="q104">
+  <p>104. 未按照要求使用核心密码、普通密码的，由密码管理部门责令改正或者停止违法行为，给予警告。 (判断)</p>
+  <label><input type="radio" name="q104" value="正确"> 正确</label>
+  <label><input type="radio" name="q104" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q104')">确认答案</button>
+  <div class="feedback" id="feedback_q104"></div>
+  <div class="analysis" id="analysis_q104">nan</div>
+</div>
+
+<div class="question" id="q105">
+  <p>105. 密码管理部门因工作需要，按照国家有关规定，可以提请公安、交通运输、海关等部门对核心密码、普通密码有关物品和人员提供免检等便利，有关部门应当予以协助。 (判断)</p>
+  <label><input type="radio" name="q105" value="正确"> 正确</label>
+  <label><input type="radio" name="q105" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q105')">确认答案</button>
+  <div class="feedback" id="feedback_q105"></div>
+  <div class="analysis" id="analysis_q105">nan</div>
+</div>
+
+<div class="question" id="q106">
+  <p>106. 阻碍国家情报工作机构及其工作人员依法开展情报工作的，只能由国家安全机关建议相关单位给予处分。 (判断)</p>
+  <label><input type="radio" name="q106" value="正确"> 正确</label>
+  <label><input type="radio" name="q106" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q106')">确认答案</button>
+  <div class="feedback" id="feedback_q106"></div>
+  <div class="analysis" id="analysis_q106">中华人民共和国国家情报法：第二十八条　违反本法规定，阻碍国家情报工作机构及其工作人员依法开展情报工作的，由国家情报工作机构建议相关单位给予处分或者由国家安全机关、公安机关处警告或者十五日以下拘留；构成犯罪的，依法追究刑事责任。</div>
+</div>
+
+<div class="question" id="q107">
+  <p>107. 国家情报工作应当依法进行，尊重和保障人权，维护个人及相关社会团体的各项权益。 (判断)</p>
+  <label><input type="radio" name="q107" value="正确"> 正确</label>
+  <label><input type="radio" name="q107" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q107')">确认答案</button>
+  <div class="feedback" id="feedback_q107"></div>
+  <div class="analysis" id="analysis_q107">中华人民共和国国家情报法：第八条　国家情报工作应当依法进行，尊重和保障人权，维护个人和组织的合法权益。</div>
+</div>
+
+<div class="question" id="q108">
+  <p>108. 国家情报工作机构可以按照国家有关规定，开展对外交流与合作。 (判断)</p>
+  <label><input type="radio" name="q108" value="正确"> 正确</label>
+  <label><input type="radio" name="q108" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q108')">确认答案</button>
+  <div class="feedback" id="feedback_q108"></div>
+  <div class="analysis" id="analysis_q108">nan</div>
+</div>
+
+<div class="question" id="q109">
+  <p>109. 任何组织和公民都应当依法支持国家情报工作，保守所知悉的国家情报工作秘密。 (判断)</p>
+  <label><input type="radio" name="q109" value="正确"> 正确</label>
+  <label><input type="radio" name="q109" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q109')">确认答案</button>
+  <div class="feedback" id="feedback_q109"></div>
+  <div class="analysis" id="analysis_q109">nan</div>
+</div>
+
+<div class="question" id="q110">
+  <p>110. 个人因协助国家情报工作导致财产损失的，按照实际损失给予赔偿。 (判断)</p>
+  <label><input type="radio" name="q110" value="正确"> 正确</label>
+  <label><input type="radio" name="q110" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q110')">确认答案</button>
+  <div class="feedback" id="feedback_q110"></div>
+  <div class="analysis" id="analysis_q110">中华人民共和国国家情报法：第二十五条　对因开展国家情报工作或者支持、协助和配合国家情报工作导致伤残或者牺牲、死亡的人员，按照国家有关规定给予相应的抚恤优待。
+个人和组织因支持、协助和配合国家情报工作导致财产损失的，按照国家有关规定给予补偿。</div>
+</div>
+
+<div class="question" id="q111">
+  <p>111. 国家对支持、协助和配合国家情报工作的组织给予保护。 (判断)</p>
+  <label><input type="radio" name="q111" value="正确"> 正确</label>
+  <label><input type="radio" name="q111" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q111')">确认答案</button>
+  <div class="feedback" id="feedback_q111"></div>
+  <div class="analysis" id="analysis_q111">nan</div>
+</div>
+
+<div class="question" id="q112">
+  <p>112. 根据《中华人民共和国国家安全法》的规定，每年（）为全民国家安全教育日。 (单选)</p>
+  <label><input type="radio" name="q112" value="A"> A. 4月10日</label><br>
+  <label><input type="radio" name="q112" value="B"> B. 4月15日</label><br>
+  <label><input type="radio" name="q112" value="C"> C. 4月18日</label><br>
+  <label><input type="radio" name="q112" value="D"> D. 4月20日</label><br>
+  <button type="button" onclick="checkAnswer('q112')">确认答案</button>
+  <div class="feedback" id="feedback_q112"></div>
+  <div class="analysis" id="analysis_q112">nan</div>
+</div>
+
+<div class="question" id="q113">
+  <p>113. 党的十八大以来，为适应新形势，新的《中华人民共和国国家安全法》经全国人大常委会审议通过后，（）起正式施行。 (单选)</p>
+  <label><input type="radio" name="q113" value="A"> A. 2015年7月1日</label><br>
+  <label><input type="radio" name="q113" value="B"> B. 2014年1月1日</label><br>
+  <label><input type="radio" name="q113" value="C"> C. 2016年2月22日</label><br>
+  <label><input type="radio" name="q113" value="D"> D. 2017年7月1日</label><br>
+  <button type="button" onclick="checkAnswer('q113')">确认答案</button>
+  <div class="feedback" id="feedback_q113"></div>
+  <div class="analysis" id="analysis_q113">nan</div>
+</div>
+
+<div class="question" id="q114">
+  <p>114. 国家安全是安邦定国的重要基石，（）是全国各族人民根本利益所在。 (单选)</p>
+  <label><input type="radio" name="q114" value="A"> A. 加快经济发展</label><br>
+  <label><input type="radio" name="q114" value="B"> B. 维护国家统一</label><br>
+  <label><input type="radio" name="q114" value="C"> C. 促进国际合作</label><br>
+  <label><input type="radio" name="q114" value="D"> D. 维护国家安全</label><br>
+  <button type="button" onclick="checkAnswer('q114')">确认答案</button>
+  <div class="feedback" id="feedback_q114"></div>
+  <div class="analysis" id="analysis_q114">nan</div>
+</div>
+
+<div class="question" id="q115">
+  <p>115. 总体国家安全观明确提出，要以（）为宗旨，以（）为根本，以（）为基础，以军事、科技、文化、社会安全为保障，以促进 （）为依托，走出一条中国特色国家安全道路。 (单选)</p>
+  <label><input type="radio" name="q115" value="A"> A. 政治安全、人民安全、经济安全、国际安全</label><br>
+  <label><input type="radio" name="q115" value="B"> B. 人民安全、经济安全、政治安全、国际安全</label><br>
+  <label><input type="radio" name="q115" value="C"> C. 人民安全、政治安全、经济安全、国际安全</label><br>
+  <label><input type="radio" name="q115" value="D"> D. 经济安全、人民安全、政治安全、国际安全</label><br>
+  <button type="button" onclick="checkAnswer('q115')">确认答案</button>
+  <div class="feedback" id="feedback_q115"></div>
+  <div class="analysis" id="analysis_q115">nan</div>
+</div>
+
+<div class="question" id="q116">
+  <p>116. 为了维护国家安全，保卫人民民主专政的政权和中国特色社会主义制度，根据（），制定《中华人民共和国国家安全法》。 (单选)</p>
+  <label><input type="radio" name="q116" value="A"> A. 民法</label><br>
+  <label><input type="radio" name="q116" value="B"> B. 刑法</label><br>
+  <label><input type="radio" name="q116" value="C"> C. 宪法</label><br>
+  <label><input type="radio" name="q116" value="D"> D. 政策</label><br>
+  <button type="button" onclick="checkAnswer('q116')">确认答案</button>
+  <div class="feedback" id="feedback_q116"></div>
+  <div class="analysis" id="analysis_q116">nan</div>
+</div>
+
+<div class="question" id="q117">
+  <p>117. 根据《中华人民共和国国家安全法》的规定，公民和组织支持、协助国家安全工作的行为（）。 (单选)</p>
+  <label><input type="radio" name="q117" value="A"> A. 受法律保护</label><br>
+  <label><input type="radio" name="q117" value="B"> B. 是正当行为</label><br>
+  <label><input type="radio" name="q117" value="C"> C. 应当受到称赞</label><br>
+  <label><input type="radio" name="q117" value="D"> D. 有关部门应当给予表扬</label><br>
+  <button type="button" onclick="checkAnswer('q117')">确认答案</button>
+  <div class="feedback" id="feedback_q117"></div>
+  <div class="analysis" id="analysis_q117">nan</div>
+</div>
+
+<div class="question" id="q118">
+  <p>118. 《中华人民共和国国家安全法》第十六条提到：国家维护和发展最广大人民的根本利益，（），创造良好生存发展条件和安定工作生活环境，保障公民的生命财产安全和其他合法权益。 (单选)</p>
+  <label><input type="radio" name="q118" value="A"> A. 保卫人民财产</label><br>
+  <label><input type="radio" name="q118" value="B"> B. 维护国家安全</label><br>
+  <label><input type="radio" name="q118" value="C"> C. 维护社会稳定</label><br>
+  <label><input type="radio" name="q118" value="D"> D. 保卫人民安全</label><br>
+  <button type="button" onclick="checkAnswer('q118')">确认答案</button>
+  <div class="feedback" id="feedback_q118"></div>
+  <div class="analysis" id="analysis_q118">nan</div>
+</div>
+
+<div class="question" id="q119">
+  <p>119. 国家安全重点领域工作协调机制，是（）的协调机制。 (单选)</p>
+  <label><input type="radio" name="q119" value="A"> A. 中央与地方之间</label><br>
+  <label><input type="radio" name="q119" value="B"> B. 军地之间</label><br>
+  <label><input type="radio" name="q119" value="C"> C. 地区之间</label><br>
+  <label><input type="radio" name="q119" value="D"> D. 中央有关职能部门之间</label><br>
+  <button type="button" onclick="checkAnswer('q119')">确认答案</button>
+  <div class="feedback" id="feedback_q119"></div>
+  <div class="analysis" id="analysis_q119">nan</div>
+</div>
+
+<div class="question" id="q120">
+  <p>120. 国家机关及其工作人员在国家安全工作和涉及国家安全活动中，应当（），不得超越职权、滥用职权，不得侵犯个人和组织的合法权益。 (单选)</p>
+  <label><input type="radio" name="q120" value="A"> A. 保守国家秘密</label><br>
+  <label><input type="radio" name="q120" value="B"> B. 维护国家安全</label><br>
+  <label><input type="radio" name="q120" value="C"> C. 保证自身安全</label><br>
+  <label><input type="radio" name="q120" value="D"> D. 严格依法履行
+职责</label><br>
+  <button type="button" onclick="checkAnswer('q120')">确认答案</button>
+  <div class="feedback" id="feedback_q120"></div>
+  <div class="analysis" id="analysis_q120">nan</div>
+</div>
+
+<div class="question" id="q121">
+  <p>121. 我国第一部《中华人民共和国国家安全法》是（）年出台的。 (单选)</p>
+  <label><input type="radio" name="q121" value="A"> A. 1993</label><br>
+  <label><input type="radio" name="q121" value="B"> B. 1994</label><br>
+  <label><input type="radio" name="q121" value="C"> C. 1995</label><br>
+  <label><input type="radio" name="q121" value="D"> D. 1996</label><br>
+  <button type="button" onclick="checkAnswer('q121')">确认答案</button>
+  <div class="feedback" id="feedback_q121"></div>
+  <div class="analysis" id="analysis_q121">nan</div>
+</div>
+
+<div class="question" id="q122">
+  <p>122. 《中华人民共和国国家安全法》是经（）通过的。 (单选)</p>
+  <label><input type="radio" name="q122" value="A"> A. 中国人民政治协商会议</label><br>
+  <label><input type="radio" name="q122" value="B"> B. 国务院常务会议</label><br>
+  <label><input type="radio" name="q122" value="C"> C. 全国人民代表大会</label><br>
+  <label><input type="radio" name="q122" value="D"> D. 全国人民代表大会常务委员会</label><br>
+  <button type="button" onclick="checkAnswer('q122')">确认答案</button>
+  <div class="feedback" id="feedback_q122"></div>
+  <div class="analysis" id="analysis_q122">nan</div>
+</div>
+
+<div class="question" id="q123">
+  <p>123. 根据《中华人民共和国国家安全法》的规定，下列说法错误的是（）。 (单选)</p>
+  <label><input type="radio" name="q123" value="A"> A. 公民支持、协助国家安全工作，有权要求国家安全机关、公安机关采取有效措施，防范、制止侵犯其合法权益的行为</label><br>
+  <label><input type="radio" name="q123" value="B"> B. 公民享有言论、出版、集会、结社、游行、示威的自由，任何时候不受侵害</label><br>
+  <label><input type="radio" name="q123" value="C"> C. 公民对国家机关及其工作人员在国家安全工作中的违法失职行为有提出申诉、控告和检举的权利</label><br>
+  <label><input type="radio" name="q123" value="D"> D. 确因国家安全工作需要采取限制公民权利和自由的特别措施时，应当依法进行，并以维护国家安全的实际需要为限度</label><br>
+  <button type="button" onclick="checkAnswer('q123')">确认答案</button>
+  <div class="feedback" id="feedback_q123"></div>
+  <div class="analysis" id="analysis_q123">nan</div>
+</div>
+
+<div class="question" id="q124">
+  <p>124. 下列对国家安全理解错误的是（）。 (单选)</p>
+  <label><input type="radio" name="q124" value="A"> A. 社会秩序不属于国家安全内容</label><br>
+  <label><input type="radio" name="q124" value="B"> B. 国家安全与我们息息相关</label><br>
+  <label><input type="radio" name="q124" value="C"> C. 没有国家的安全，公民个人的安全就无法得到保障</label><br>
+  <label><input type="radio" name="q124" value="D"> D. 国家安全是国家生存与发展的重要保障</label><br>
+  <button type="button" onclick="checkAnswer('q124')">确认答案</button>
+  <div class="feedback" id="feedback_q124"></div>
+  <div class="analysis" id="analysis_q124">nan</div>
+</div>
+
+<div class="question" id="q125">
+  <p>125. 维护国家主权、统一和领土完整是（）的共同义务。 (单选)</p>
+  <label><input type="radio" name="q125" value="A"> A. 国家工作人员</label><br>
+  <label><input type="radio" name="q125" value="B"> B. 港澳同胞和台湾同胞</label><br>
+  <label><input type="radio" name="q125" value="C"> C. 国家安全机关工作人员</label><br>
+  <label><input type="radio" name="q125" value="D"> D. 包括港澳同胞和台湾同胞在内的全中国人民</label><br>
+  <button type="button" onclick="checkAnswer('q125')">确认答案</button>
+  <div class="feedback" id="feedback_q125"></div>
+  <div class="analysis" id="analysis_q125">nan</div>
+</div>
+
+<div class="question" id="q126">
+  <p>126. 《中华人民共和国国家安全法》所界定的“国家安全”不包括 （） 。 (单选)</p>
+  <label><input type="radio" name="q126" value="A"> A. 文化安全</label><br>
+  <label><input type="radio" name="q126" value="B"> B. 个人隐私安全</label><br>
+  <label><input type="radio" name="q126" value="C"> C. 生态安全</label><br>
+  <label><input type="radio" name="q126" value="D"> D. 核安全</label><br>
+  <button type="button" onclick="checkAnswer('q126')">确认答案</button>
+  <div class="feedback" id="feedback_q126"></div>
+  <div class="analysis" id="analysis_q126">nan</div>
+</div>
+
+<div class="question" id="q127">
+  <p>127. 根据《中华人民共和国国家安全法》的规定，下列关于建立国家安全风险评估机制的说法不正确的是（）。 (单选)</p>
+  <label><input type="radio" name="q127" value="A"> A. 国家建立国家安全风险评估机制，定期开展各领域国家安全风险调查评估</label><br>
+  <label><input type="radio" name="q127" value="B"> B. 国家建立国家安全风险评估机制，不定期开展各领域国家安全风险调查评估</label><br>
+  <label><input type="radio" name="q127" value="C"> C. 国家制定完善应对各领域国家安全风险预案</label><br>
+  <label><input type="radio" name="q127" value="D"> D. 国家健全国家安全风险监测预警制度，根据国家安全风险程度，及时发布相应风险预警</label><br>
+  <button type="button" onclick="checkAnswer('q127')">确认答案</button>
+  <div class="feedback" id="feedback_q127"></div>
+  <div class="analysis" id="analysis_q127">nan</div>
+</div>
+
+<div class="question" id="q128">
+  <p>128. 国家安全机关、公安机关依法搜集涉及国家安全的情报信息，在国家安全工作中依法行使 （），以及法律规定的其他职权。 (单选)</p>
+  <label><input type="radio" name="q128" value="A"> A. 侦查、预审、拘留</label><br>
+  <label><input type="radio" name="q128" value="B"> B. 侦查、预审、拘留、留置</label><br>
+  <label><input type="radio" name="q128" value="C"> C. 预审、拘留、逮捕</label><br>
+  <label><input type="radio" name="q128" value="D"> D. 侦查、预审、拘留、执行逮捕</label><br>
+  <button type="button" onclick="checkAnswer('q128')">确认答案</button>
+  <div class="feedback" id="feedback_q128"></div>
+  <div class="analysis" id="analysis_q128">nan</div>
+</div>
+
+<div class="question" id="q129">
+  <p>129. 国家安全机关在反间谍工作中必须依靠（）制止危害国家安全的间谍行为。 (单选)</p>
+  <label><input type="radio" name="q129" value="A"> A. 政府</label><br>
+  <label><input type="radio" name="q129" value="B"> B. 国家</label><br>
+  <label><input type="radio" name="q129" value="C"> C. 党</label><br>
+  <label><input type="radio" name="q129" value="D"> D. 人民</label><br>
+  <button type="button" onclick="checkAnswer('q129')">确认答案</button>
+  <div class="feedback" id="feedback_q129"></div>
+  <div class="analysis" id="analysis_q129">nan</div>
+</div>
+
+<div class="question" id="q130">
+  <p>130. 国家安全机关的工作人员依法执行反间谍工作任务时，依照规定出示工作证件，有权查验中国公民或者境外人员的（）。 (单选)</p>
+  <label><input type="radio" name="q130" value="A"> A. 亲属关系</label><br>
+  <label><input type="radio" name="q130" value="B"> B. 就业情況</label><br>
+  <label><input type="radio" name="q130" value="C"> C. 财产状况</label><br>
+  <label><input type="radio" name="q130" value="D"> D. 身份证明</label><br>
+  <button type="button" onclick="checkAnswer('q130')">确认答案</button>
+  <div class="feedback" id="feedback_q130"></div>
+  <div class="analysis" id="analysis_q130">nan</div>
+</div>
+
+<div class="question" id="q131">
+  <p>131. 国家安全机关及其工作人员依法履行反间谍工作职责获取的个人和组织的信息，材料该如何处理（）？ (单选)</p>
+  <label><input type="radio" name="q131" value="A"> A. 经过国务院批准，可用于除反间谍工作外的其他工作</label><br>
+  <label><input type="radio" name="q131" value="B"> B. 经过国家安全机关的批准，可用于信息存储</label><br>
+  <label><input type="radio" name="q131" value="C"> C. 只能用于反间谍工作</label><br>
+  <label><input type="radio" name="q131" value="D"> D. 可用于信息存储</label><br>
+  <button type="button" onclick="checkAnswer('q131')">确认答案</button>
+  <div class="feedback" id="feedback_q131"></div>
+  <div class="analysis" id="analysis_q131">nan</div>
+</div>
+
+<div class="question" id="q132">
+  <p>132. 以下哪种情况不应拨打12339国家安全举报热线的是（）。 (单选)</p>
+  <label><input type="radio" name="q132" value="A"> A. 军事目标周边发现可疑人员拍照、窥视的</label><br>
+  <label><input type="radio" name="q132" value="B"> B. 在网络平台、社交软件中发现非法传播涉密文件行为的</label><br>
+  <label><input type="radio" name="q132" value="C"> C. 发现私存或违规携带涉密文件行为的</label><br>
+  <label><input type="radio" name="q132" value="D"> D. 接到电信诈骗电话致使财产受损的</label><br>
+  <button type="button" onclick="checkAnswer('q132')">确认答案</button>
+  <div class="feedback" id="feedback_q132"></div>
+  <div class="analysis" id="analysis_q132">nan</div>
+</div>
+
+<div class="question" id="q133">
+  <p>133. 国家安全机关是反间谍工作的主管机关。公安、保密行政管理等其他有关部门和军队有关部门按照职责分工，（），依法做好有关工作。 (单选)</p>
+  <label><input type="radio" name="q133" value="A"> A. 各司其职、各自为政</label><br>
+  <label><input type="radio" name="q133" value="B"> B. 密切配合、加强协调</label><br>
+  <label><input type="radio" name="q133" value="C"> C. 竭力配合、加强协调</label><br>
+  <label><input type="radio" name="q133" value="D"> D. 加强协调、各负其责</label><br>
+  <button type="button" onclick="checkAnswer('q133')">确认答案</button>
+  <div class="feedback" id="feedback_q133"></div>
+  <div class="analysis" id="analysis_q133">nan</div>
+</div>
+
+<div class="question" id="q134">
+  <p>134. 根据《中华人民共和国密码法》的规定，下列哪种类型（）的密码用于保护不属于国家秘密的信息。 (单选)</p>
+  <label><input type="radio" name="q134" value="A"> A. 商用密码</label><br>
+  <label><input type="radio" name="q134" value="B"> B. 普通密码</label><br>
+  <label><input type="radio" name="q134" value="C"> C. 重要密码</label><br>
+  <label><input type="radio" name="q134" value="D"> D. 核心密码</label><br>
+  <button type="button" onclick="checkAnswer('q134')">确认答案</button>
+  <div class="feedback" id="feedback_q134"></div>
+  <div class="analysis" id="analysis_q134">nan</div>
+</div>
+
+<div class="question" id="q135">
+  <p>135. 核心密码保护信息的最高密级为（）级。 (单选)</p>
+  <label><input type="radio" name="q135" value="A"> A. 绝密</label><br>
+  <label><input type="radio" name="q135" value="B"> B. 机密</label><br>
+  <label><input type="radio" name="q135" value="C"> C. 特密</label><br>
+  <label><input type="radio" name="q135" value="D"> D. 重要</label><br>
+  <button type="button" onclick="checkAnswer('q135')">确认答案</button>
+  <div class="feedback" id="feedback_q135"></div>
+  <div class="analysis" id="analysis_q135">nan</div>
+</div>
+
+<div class="question" id="q136">
+  <p>136. （）依法对密码工作机构的核心密码、普通密码工作进行指导、监督和检查，密码工作机构应当配合。 (单选)</p>
+  <label><input type="radio" name="q136" value="A"> A. 密码管理部门</label><br>
+  <label><input type="radio" name="q136" value="B"> B. 国务院</label><br>
+  <label><input type="radio" name="q136" value="C"> C. 保密行政管理部门</label><br>
+  <label><input type="radio" name="q136" value="D"> D. 全国人大</label><br>
+  <button type="button" onclick="checkAnswer('q136')">确认答案</button>
+  <div class="feedback" id="feedback_q136"></div>
+  <div class="analysis" id="analysis_q136">nan</div>
+</div>
+
+<div class="question" id="q137">
+  <p>137. 普通密码保护信息的最高密级为（）级。 (单选)</p>
+  <label><input type="radio" name="q137" value="A"> A. 特密</label><br>
+  <label><input type="radio" name="q137" value="B"> B. 重要</label><br>
+  <label><input type="radio" name="q137" value="C"> C. 绝密</label><br>
+  <label><input type="radio" name="q137" value="D"> D. 机密</label><br>
+  <button type="button" onclick="checkAnswer('q137')">确认答案</button>
+  <div class="feedback" id="feedback_q137"></div>
+  <div class="analysis" id="analysis_q137">nan</div>
+</div>
+
+<div class="question" id="q138">
+  <p>138. 《中华人民共和国密码法》的施行日期是（）。 (单选)</p>
+  <label><input type="radio" name="q138" value="A"> A. 2020年1月1日</label><br>
+  <label><input type="radio" name="q138" value="B"> B. 2019年12月21日</label><br>
+  <label><input type="radio" name="q138" value="C"> C. 2020年10月1日</label><br>
+  <label><input type="radio" name="q138" value="D"> D. 2019年12月31日</label><br>
+  <button type="button" onclick="checkAnswer('q138')">确认答案</button>
+  <div class="feedback" id="feedback_q138"></div>
+  <div class="analysis" id="analysis_q138">nan</div>
+</div>
+
+<div class="question" id="q139">
+  <p>139. 密码管理部门和密码工作机构应当建立健全严格的监督和安全审查制度，对其工作人员遵守法律和纪律等情况进行监督，并依法采取必要措施，定期或者不定期组织开展（）。 (单选)</p>
+  <label><input type="radio" name="q139" value="A"> A. 全方位大检查</label><br>
+  <label><input type="radio" name="q139" value="B"> B. 安全审查</label><br>
+  <label><input type="radio" name="q139" value="C"> C. 安全检查</label><br>
+  <label><input type="radio" name="q139" value="D"> D. 经费审计</label><br>
+  <button type="button" onclick="checkAnswer('q139')">确认答案</button>
+  <div class="feedback" id="feedback_q139"></div>
+  <div class="analysis" id="analysis_q139">nan</div>
+</div>
+
+<div class="question" id="q140">
+  <p>140. 国家加强密码（）和队伍建设，对在密码工作中作出()的组织和个人，按照国家有关规定给予表彰和奖励。 (单选)</p>
+  <label><input type="radio" name="q140" value="A"> A. 人才培养  突出贡献</label><br>
+  <label><input type="radio" name="q140" value="B"> B. 人才教育  突出成绩</label><br>
+  <label><input type="radio" name="q140" value="C"> C. 行业培养  卓越贡献</label><br>
+  <label><input type="radio" name="q140" value="D"> D. 行业教育  卓越成绩</label><br>
+  <button type="button" onclick="checkAnswer('q140')">确认答案</button>
+  <div class="feedback" id="feedback_q140"></div>
+  <div class="analysis" id="analysis_q140">nan</div>
+</div>
+
+<div class="question" id="q141">
+  <p>141. 国家负责统筹协调网络安全工作和相关监督管理工作的部门是（）。 (单选)</p>
+  <label><input type="radio" name="q141" value="A"> A. 公安部门</label><br>
+  <label><input type="radio" name="q141" value="B"> B. 网信部门</label><br>
+  <label><input type="radio" name="q141" value="C"> C. 工业和信息化部门</label><br>
+  <label><input type="radio" name="q141" value="D"> D. 通讯管理部门</label><br>
+  <button type="button" onclick="checkAnswer('q141')">确认答案</button>
+  <div class="feedback" id="feedback_q141"></div>
+  <div class="analysis" id="analysis_q141">nan</div>
+</div>
+
+<div class="question" id="q142">
+  <p>142. 2014年2月27日，习近平在中央网络安全和信息化领导小组第一次会议上指出：没有（）就没有国家安全，没有（）就没有现代化。 (单选)</p>
+  <label><input type="radio" name="q142" value="A"> A. 经济安全；工业化</label><br>
+  <label><input type="radio" name="q142" value="B"> B. 社会安全；法治化</label><br>
+  <label><input type="radio" name="q142" value="C"> C. 网络安全；信息化</label><br>
+  <label><input type="radio" name="q142" value="D"> D. 科技安全；信息化</label><br>
+  <button type="button" onclick="checkAnswer('q142')">确认答案</button>
+  <div class="feedback" id="feedback_q142"></div>
+  <div class="analysis" id="analysis_q142">nan</div>
+</div>
+
+<div class="question" id="q143">
+  <p>143. 《中华人民共和国网络安全法》自（）起施行。 (单选)</p>
+  <label><input type="radio" name="q143" value="A"> A. 2017年6月1日</label><br>
+  <label><input type="radio" name="q143" value="B"> B. 2017年11月1日</label><br>
+  <label><input type="radio" name="q143" value="C"> C. 2017年1月1日</label><br>
+  <label><input type="radio" name="q143" value="D"> D. 2017年5月1日</label><br>
+  <button type="button" onclick="checkAnswer('q143')">确认答案</button>
+  <div class="feedback" id="feedback_q143"></div>
+  <div class="analysis" id="analysis_q143">nan</div>
+</div>
+
+<div class="question" id="q144">
+  <p>144. 《中华人民共和国网络安全法》规定，网络运营者应当制定（），及时处置系统漏洞、计算机病毒、网络攻击、网络侵入等安全风险。 (单选)</p>
+  <label><input type="radio" name="q144" value="A"> A. 网络安全事件应急预案</label><br>
+  <label><input type="radio" name="q144" value="B"> B. 网络安全事件补救措施</label><br>
+  <label><input type="radio" name="q144" value="C"> C. 网络安全事件应急演练方案</label><br>
+  <label><input type="radio" name="q144" value="D"> D. 网站安全规章制度</label><br>
+  <button type="button" onclick="checkAnswer('q144')">确认答案</button>
+  <div class="feedback" id="feedback_q144"></div>
+  <div class="analysis" id="analysis_q144">nan</div>
+</div>
+
+<div class="question" id="q145">
+  <p>145. 网络运营者应当对其收集的用户信息严格保密，并建立健全（）。 (单选)</p>
+  <label><input type="radio" name="q145" value="A"> A. 用户信息制度</label><br>
+  <label><input type="radio" name="q145" value="B"> B. 用户信息保护制度</label><br>
+  <label><input type="radio" name="q145" value="C"> C. 用户信息加密制度</label><br>
+  <label><input type="radio" name="q145" value="D"> D. 用户信息保全制度</label><br>
+  <button type="button" onclick="checkAnswer('q145')">确认答案</button>
+  <div class="feedback" id="feedback_q145"></div>
+  <div class="analysis" id="analysis_q145">nan</div>
+</div>
+
+<div class="question" id="q146">
+  <p>146. 国家坚持网络安全与信息化发展并重，遵循（）的方针,推进网络基础设施建设和互联互通,鼓励网络技术创新和应用, 支持培养网络安全人才, 建立健全网络安全保障体系, 提高网络安全保护能力。 (单选)</p>
+  <label><input type="radio" name="q146" value="A"> A. 积极利用、科学发展、依法管理、确保安全</label><br>
+  <label><input type="radio" name="q146" value="B"> B. 同步规划、同步建设、同步使用</label><br>
+  <label><input type="radio" name="q146" value="C"> C. 网络实名制</label><br>
+  <label><input type="radio" name="q146" value="D"> D. 网络安全等级保护制度</label><br>
+  <button type="button" onclick="checkAnswer('q146')">确认答案</button>
+  <div class="feedback" id="feedback_q146"></div>
+  <div class="analysis" id="analysis_q146">nan</div>
+</div>
+
+<div class="question" id="q147">
+  <p>147. 《中华人民共和国网络安全法》适用于在中华人民国境内建设、运营、（）和使用网络，以及网络安全的监督管理。 (单选)</p>
+  <label><input type="radio" name="q147" value="A"> A. 维护</label><br>
+  <label><input type="radio" name="q147" value="B"> B. 运维</label><br>
+  <label><input type="radio" name="q147" value="C"> C. 运营</label><br>
+  <label><input type="radio" name="q147" value="D"> D. 建设</label><br>
+  <button type="button" onclick="checkAnswer('q147')">确认答案</button>
+  <div class="feedback" id="feedback_q147"></div>
+  <div class="analysis" id="analysis_q147">nan</div>
+</div>
+
+<div class="question" id="q148">
+  <p>148. 关键信息基础设施的运营者采购网络产品和服务，可能影响国家安全的，应当通过国家网信部门会同国务院有关部门组织的（）。 (单选)</p>
+  <label><input type="radio" name="q148" value="A"> A. 国家采购审查</label><br>
+  <label><input type="radio" name="q148" value="B"> B. 国家网信安全审查</label><br>
+  <label><input type="radio" name="q148" value="C"> C. 国家安全审查</label><br>
+  <label><input type="radio" name="q148" value="D"> D. 国家网络审查</label><br>
+  <button type="button" onclick="checkAnswer('q148')">确认答案</button>
+  <div class="feedback" id="feedback_q148"></div>
+  <div class="analysis" id="analysis_q148">nan</div>
+</div>
+
+<div class="question" id="q149">
+  <p>149. 《中华人民共和国网络安全法》规定，各级人民政府及其有关部门应当组织开展经常性的网络安全宣传教育，并（）有关单位做好网络安全宣传教育工作。 (单选)</p>
+  <label><input type="radio" name="q149" value="A"> A. 支持、 引导</label><br>
+  <label><input type="radio" name="q149" value="B"> B. 支持、 指导</label><br>
+  <label><input type="radio" name="q149" value="C"> C. 鼓励、 引导</label><br>
+  <label><input type="radio" name="q149" value="D"> D. 指导、 督促</label><br>
+  <button type="button" onclick="checkAnswer('q149')">确认答案</button>
+  <div class="feedback" id="feedback_q149"></div>
+  <div class="analysis" id="analysis_q149">nan</div>
+</div>
+
+<div class="question" id="q150">
+  <p>150. 《中华人民共和国国家情报法》第十八条规定，国家情报工作机构根据工作需要，按照国家有关规定，可以提请海关、出入境边防检查等机关提供（）等便利。 (单选)</p>
+  <label><input type="radio" name="q150" value="A"> A. 临时隐藏</label><br>
+  <label><input type="radio" name="q150" value="B"> B. 快速通行</label><br>
+  <label><input type="radio" name="q150" value="C"> C. 免检</label><br>
+  <label><input type="radio" name="q150" value="D"> D. 身份保护</label><br>
+  <button type="button" onclick="checkAnswer('q150')">确认答案</button>
+  <div class="feedback" id="feedback_q150"></div>
+  <div class="analysis" id="analysis_q150">nan</div>
+</div>
+
+<div class="question" id="q151">
+  <p>151. 为了加强和保障国家情报工作，维护国家安全和利益，根据（），制定《中华人民共和国国家情报法》。 (单选)</p>
+  <label><input type="radio" name="q151" value="A"> A. 国家安全法</label><br>
+  <label><input type="radio" name="q151" value="B"> B. 宪法</label><br>
+  <label><input type="radio" name="q151" value="C"> C. 反间谍法</label><br>
+  <label><input type="radio" name="q151" value="D"> D. 刑法</label><br>
+  <button type="button" onclick="checkAnswer('q151')">确认答案</button>
+  <div class="feedback" id="feedback_q151"></div>
+  <div class="analysis" id="analysis_q151">nan</div>
+</div>
+
+<div class="question" id="q152">
+  <p>152. （）对国家情报工作实行统一领导。 (单选)</p>
+  <label><input type="radio" name="q152" value="A"> A. 国家安全部</label><br>
+  <label><input type="radio" name="q152" value="B"> B. 国务院</label><br>
+  <label><input type="radio" name="q152" value="C"> C. 中央军委</label><br>
+  <label><input type="radio" name="q152" value="D"> D. 中央国家安全领导机构</label><br>
+  <button type="button" onclick="checkAnswer('q152')">确认答案</button>
+  <div class="feedback" id="feedback_q152"></div>
+  <div class="analysis" id="analysis_q152">nan</div>
+</div>
+
+<div class="question" id="q153">
+  <p>153. 对国家情报工作机构职权描述正确的是（）。 (单选)</p>
+  <label><input type="radio" name="q153" value="A"> A. 根据需要，依法使用必要的方式、手段和渠道，只能在国外开展情报工作</label><br>
+  <label><input type="radio" name="q153" value="B"> B. 根据需要，依法使用必要的方式、手段和渠道，只能在境外开展情报工作</label><br>
+  <label><input type="radio" name="q153" value="C"> C. 根据需要，依法使用必要的方式、手段和渠道，在境内外开展情报工作</label><br>
+  <label><input type="radio" name="q153" value="D"> D. 根据需要，依法使用必要的方式、手段和渠道，在海内外开展情报工作</label><br>
+  <button type="button" onclick="checkAnswer('q153')">确认答案</button>
+  <div class="feedback" id="feedback_q153"></div>
+  <div class="analysis" id="analysis_q153">nan</div>
+</div>
+
+<div class="question" id="q154">
+  <p>154. 犯间谍罪，情节较轻的，处（）。 (单选)</p>
+  <label><input type="radio" name="q154" value="A"> A. 三年以下有期徒刑</label><br>
+  <label><input type="radio" name="q154" value="B"> B. 三年以上十年以下有期徒刑</label><br>
+  <label><input type="radio" name="q154" value="C"> C. 十年以上有期徒刑</label><br>
+  <label><input type="radio" name="q154" value="D"> D. 拘役</label><br>
+  <button type="button" onclick="checkAnswer('q154')">确认答案</button>
+  <div class="feedback" id="feedback_q154"></div>
+  <div class="analysis" id="analysis_q154">nan</div>
+</div>
+
+<div class="question" id="q155">
+  <p>155. 国家安全包括（）。 (多选)</p>
+  <label><input type="checkbox" name="q155" value="A"> A. 国土安全、政治安全、军事安全</label><br>
+  <label><input type="checkbox" name="q155" value="B"> B. 经济安全、文化安全、科技安全、生态安全</label><br>
+  <label><input type="checkbox" name="q155" value="C"> C. 网络安全、社会安全、资源安全、核安全、海外利益安全</label><br>
+  <label><input type="checkbox" name="q155" value="D"> D. 极地安全、太空安全、生物安全和深海安全</label><br>
+  <button type="button" onclick="checkAnswer('q155')">确认答案</button>
+  <div class="feedback" id="feedback_q155"></div>
+  <div class="analysis" id="analysis_q155">nan</div>
+</div>
+
+<div class="question" id="q156">
+  <p>156. 中央国家安全领导机构实行（）的国家安全制度与工作机制。 (多选)</p>
+  <label><input type="checkbox" name="q156" value="A"> A. 集中统一</label><br>
+  <label><input type="checkbox" name="q156" value="B"> B. 统分结合</label><br>
+  <label><input type="checkbox" name="q156" value="C"> C. 高效权威</label><br>
+  <label><input type="checkbox" name="q156" value="D"> D. 协调高效</label><br>
+  <button type="button" onclick="checkAnswer('q156')">确认答案</button>
+  <div class="feedback" id="feedback_q156"></div>
+  <div class="analysis" id="analysis_q156">nan</div>
+</div>
+
+<div class="question" id="q157">
+  <p>157. 《中华人民共和国国家安全法》中规定，国家健全（）的情报信息收集、研判和使用制度，建立情报信息工作协调机制，实现情报信息的及时收集、准确研判、有效使用和共享。 (多选)</p>
+  <label><input type="checkbox" name="q157" value="A"> A. 统一归口</label><br>
+  <label><input type="checkbox" name="q157" value="B"> B. 反应灵敏</label><br>
+  <label><input type="checkbox" name="q157" value="C"> C. 准确高效</label><br>
+  <label><input type="checkbox" name="q157" value="D"> D. 运转顺畅</label><br>
+  <button type="button" onclick="checkAnswer('q157')">确认答案</button>
+  <div class="feedback" id="feedback_q157"></div>
+  <div class="analysis" id="analysis_q157">nan</div>
+</div>
+
+<div class="question" id="q158">
+  <p>158. 小张是一名退伍军人，在北京旅游期间，发现旅行团有2名外国游客形迹可疑，多次徘徊在军事管理区附近拍照。根据《中华人民共和国国家安全法》规定，下列行为正确的是（）。 (多选)</p>
+  <label><input type="checkbox" name="q158" value="A"> A. 拨打12339举报电话，向国家安全机关报告</label><br>
+  <label><input type="checkbox" name="q158" value="B"> B. 若条件允许，记录该2名游客形迹可疑的证据</label><br>
+  <label><input type="checkbox" name="q158" value="C"> C. 就近向该军事管理区报告</label><br>
+  <label><input type="checkbox" name="q158" value="D"> D. 多一事不如少一事，不去理睬</label><br>
+  <button type="button" onclick="checkAnswer('q158')">确认答案</button>
+  <div class="feedback" id="feedback_q158"></div>
+  <div class="analysis" id="analysis_q158">nan</div>
+</div>
+
+<div class="question" id="q159">
+  <p>159. 中国国家安全的战略性顶层设计是（）。 (多选)</p>
+  <label><input type="checkbox" name="q159" value="A"> A. 坚持总体国家安全观</label><br>
+  <label><input type="checkbox" name="q159" value="B"> B. 设立国家安全委员会</label><br>
+  <label><input type="checkbox" name="q159" value="C"> C. 制定和实施国家安全战略</label><br>
+  <label><input type="checkbox" name="q159" value="D"> D. 推进国家安全法治建设</label><br>
+  <button type="button" onclick="checkAnswer('q159')">确认答案</button>
+  <div class="feedback" id="feedback_q159"></div>
+  <div class="analysis" id="analysis_q159">nan</div>
+</div>
+
+<div class="question" id="q160">
+  <p>160. 根据《中华人民共和国国家安全法》规定，根据职责分工，哪些机关（）依法搜集涉及国家安全的情报信息。 (多选)</p>
+  <label><input type="checkbox" name="q160" value="A"> A. 国家安全机关</label><br>
+  <label><input type="checkbox" name="q160" value="B"> B. 检察机关</label><br>
+  <label><input type="checkbox" name="q160" value="C"> C. 公安机关</label><br>
+  <label><input type="checkbox" name="q160" value="D"> D. 所有军事机关</label><br>
+  <button type="button" onclick="checkAnswer('q160')">确认答案</button>
+  <div class="feedback" id="feedback_q160"></div>
+  <div class="analysis" id="analysis_q160">nan</div>
+</div>
+
+<div class="question" id="q161">
+  <p>161. 维护国家安全，既要依靠专门机关，又要依靠广大人民群众的理解、支持和参与，这是国家安全工作的政治优势和重要原则，下列关于这一原则表述正确的有（）。 (多选)</p>
+  <label><input type="checkbox" name="q161" value="A"> A. 坚持专门工作与群众路线相结合，夯实国家安全工作群众基础</label><br>
+  <label><input type="checkbox" name="q161" value="B"> B. 坚持以人民群众为主，专门机关辅助的作法，让敌人陷于人民战争中</label><br>
+  <label><input type="checkbox" name="q161" value="C"> C. 要广泛依靠全社会力量，发挥广大人民群众积极性</label><br>
+  <label><input type="checkbox" name="q161" value="D"> D. 可以形成专门机关为骨干，广大人民群众广泛参与的工作格局</label><br>
+  <button type="button" onclick="checkAnswer('q161')">确认答案</button>
+  <div class="feedback" id="feedback_q161"></div>
+  <div class="analysis" id="analysis_q161">nan</div>
+</div>
+
+<div class="question" id="q162">
+  <p>162. 国家安全工作应当统筹（）。 (多选)</p>
+  <label><input type="checkbox" name="q162" value="A"> A. 内部安全和外部安全</label><br>
+  <label><input type="checkbox" name="q162" value="B"> B. 国土安全和国民安全</label><br>
+  <label><input type="checkbox" name="q162" value="C"> C. 传统安全和非传统安全</label><br>
+  <label><input type="checkbox" name="q162" value="D"> D. 自身安全和共同安全</label><br>
+  <button type="button" onclick="checkAnswer('q162')">确认答案</button>
+  <div class="feedback" id="feedback_q162"></div>
+  <div class="analysis" id="analysis_q162">nan</div>
+</div>
+
+<div class="question" id="q163">
+  <p>163. 根据《中华人民共和国国家安全法》的规定，下列哪些（）是中央国家安全领导机构的职权。 (多选)</p>
+  <label><input type="checkbox" name="q163" value="A"> A. 研究制定、指导实施国家安全战略和有关方针政策</label><br>
+  <label><input type="checkbox" name="q163" value="B"> B. 研究制定、指导实施国家安全战略和有关重大方针政策</label><br>
+  <label><input type="checkbox" name="q163" value="C"> C. 负责国家安全工作的决策和议事协调</label><br>
+  <label><input type="checkbox" name="q163" value="D"> D. 统筹协调国家安全事项和工作</label><br>
+  <button type="button" onclick="checkAnswer('q163')">确认答案</button>
+  <div class="feedback" id="feedback_q163"></div>
+  <div class="analysis" id="analysis_q163">nan</div>
+</div>
+
+<div class="question" id="q164">
+  <p>164. 根据《中华人民共和国国家安全法》的规定，关于国家安全保障的说法下列（）哪些是正确的？ (多选)</p>
+  <label><input type="checkbox" name="q164" value="A"> A. 国家依法保护有关机关专门从事国家安全工作人员的身份和合法权益，加大人身保护和安置保障力度</label><br>
+  <label><input type="checkbox" name="q164" value="B"> B. 国家加大对国家安全各项建设的投入，保障国家安全工作所需经费和装备</label><br>
+  <label><input type="checkbox" name="q164" value="C"> C. 国家健全国家安全法律制度体系，推动国家安全法治建设</label><br>
+  <label><input type="checkbox" name="q164" value="D"> D. 国家健全国家安全保障体系，增强维护国家安全的能力</label><br>
+  <button type="button" onclick="checkAnswer('q164')">确认答案</button>
+  <div class="feedback" id="feedback_q164"></div>
+  <div class="analysis" id="analysis_q164">nan</div>
+</div>
+
+<div class="question" id="q165">
+  <p>165. 反间谍工作必须坚持下列（）哪些原则。 (多选)</p>
+  <label><input type="checkbox" name="q165" value="A"> A. 党中央集中统一领导</label><br>
+  <label><input type="checkbox" name="q165" value="B"> B. 公开工作与秘密工作相结合</label><br>
+  <label><input type="checkbox" name="q165" value="C"> C. 专门工作与群众路线相结合</label><br>
+  <label><input type="checkbox" name="q165" value="D"> D. 安全与发展相结合</label><br>
+  <button type="button" onclick="checkAnswer('q165')">确认答案</button>
+  <div class="feedback" id="feedback_q165"></div>
+  <div class="analysis" id="analysis_q165">nan</div>
+</div>
+
+<div class="question" id="q166">
+  <p>166. （）有防范、制止间谍行为，维护国家安全的义务。 (多选)</p>
+  <label><input type="checkbox" name="q166" value="A"> A. 一切国家机关</label><br>
+  <label><input type="checkbox" name="q166" value="B"> B. 武装力量</label><br>
+  <label><input type="checkbox" name="q166" value="C"> C. 各政党和各人民团体</label><br>
+  <label><input type="checkbox" name="q166" value="D"> D. 各企业事业组织</label><br>
+  <button type="button" onclick="checkAnswer('q166')">确认答案</button>
+  <div class="feedback" id="feedback_q166"></div>
+  <div class="analysis" id="analysis_q166">nan</div>
+</div>
+
+<div class="question" id="q167">
+  <p>167. 下列属于公民、组织履行《中华人民共和国反间谍法》规定的法定义务的是（）。 (多选)</p>
+  <label><input type="checkbox" name="q167" value="A"> A. 依法支持、协助反间谍工作</label><br>
+  <label><input type="checkbox" name="q167" value="B"> B. 配合国家安全机关工作人员依法执行反间谍工作</label><br>
+  <label><input type="checkbox" name="q167" value="C"> C. 依法及时报告发现的间谍行为</label><br>
+  <label><input type="checkbox" name="q167" value="D"> D. 保守所知悉的反间谍工作秘密</label><br>
+  <button type="button" onclick="checkAnswer('q167')">确认答案</button>
+  <div class="feedback" id="feedback_q167"></div>
+  <div class="analysis" id="analysis_q167">nan</div>
+</div>
+
+<div class="question" id="q168">
+  <p>168. 国家安全机关因反间谍工作需要，可以查验有关个人和组织的电子设备、设施及有关程序、工具,在查验中发现存在危害国家安全情形的，国家安全机关应当责令其整改,在（）的情形下，可以予以查封、扣押。 (多选)</p>
+  <label><input type="checkbox" name="q168" value="A"> A. 拒绝整改</label><br>
+  <label><input type="checkbox" name="q168" value="B"> B. 配合整改</label><br>
+  <label><input type="checkbox" name="q168" value="C"> C. 整改后仍存在隐患</label><br>
+  <label><input type="checkbox" name="q168" value="D"> D. 整改后符合要求</label><br>
+  <button type="button" onclick="checkAnswer('q168')">确认答案</button>
+  <div class="feedback" id="feedback_q168"></div>
+  <div class="analysis" id="analysis_q168">nan</div>
+</div>
+
+<div class="question" id="q169">
+  <p>169. 国家安全机关对下列（）哪些行为，可以予以警告或者处十日以下行政拘留。 (多选)</p>
+  <label><input type="checkbox" name="q169" value="A"> A. 故意阻碍国家安全机关依法执行任务，尚不构成犯罪的</label><br>
+  <label><input type="checkbox" name="q169" value="B"> B. 对依法支持、协助国家安全机关工作的个人和组织进行打击报复,尚不构成犯罪的</label><br>
+  <label><input type="checkbox" name="q169" value="C"> C. 明知是间谍行为的涉案财物而窝藏、转移、收购、代为销售或者以其他方法掩饰、隐瞒,尚不构成犯罪的</label><br>
+  <label><input type="checkbox" name="q169" value="D"> D. 隐藏、转移、变卖、损毁国家安全机关依法查封、扣押、冻结的财物,尚不构成犯罪的</label><br>
+  <button type="button" onclick="checkAnswer('q169')">确认答案</button>
+  <div class="feedback" id="feedback_q169"></div>
+  <div class="analysis" id="analysis_q169">nan</div>
+</div>
+
+<div class="question" id="q170">
+  <p>170. 明知他人有间谍犯罪行为，在国家安全机关向其（）时，拒绝提供的，由国家安全机关处十日以下行政拘留;构成犯罪的，依法追究刑事责任。 (多选)</p>
+  <label><input type="checkbox" name="q170" value="A"> A. 调查有关情况</label><br>
+  <label><input type="checkbox" name="q170" value="B"> B. 要求提供便利条件</label><br>
+  <label><input type="checkbox" name="q170" value="C"> C. 收集有关证据</label><br>
+  <label><input type="checkbox" name="q170" value="D"> D. 要求提供其他协助</label><br>
+  <button type="button" onclick="checkAnswer('q170')">确认答案</button>
+  <div class="feedback" id="feedback_q170"></div>
+  <div class="analysis" id="analysis_q170">nan</div>
+</div>
+
+<div class="question" id="q171">
+  <p>171. 密码工作机构发现核心密码、普通密码泄密或者影响核心密码、普通密码安全的重大问题、风险隐患的，应当立即采取应对措施，并及时向（）报告。 (多选)</p>
+  <label><input type="checkbox" name="q171" value="A"> A. 密码管理部门</label><br>
+  <label><input type="checkbox" name="q171" value="B"> B. 全国人大常委会</label><br>
+  <label><input type="checkbox" name="q171" value="C"> C. 国务院</label><br>
+  <label><input type="checkbox" name="q171" value="D"> D. 保密行政管理部门</label><br>
+  <button type="button" onclick="checkAnswer('q171')">确认答案</button>
+  <div class="feedback" id="feedback_q171"></div>
+  <div class="analysis" id="analysis_q171">nan</div>
+</div>
+
+<div class="question" id="q172">
+  <p>172. 密码是指采用特定变换的方法对信息等进行（）的技术、产品和服务。 (多选)</p>
+  <label><input type="checkbox" name="q172" value="A"> A. 加密保护</label><br>
+  <label><input type="checkbox" name="q172" value="B"> B. 加密保护</label><br>
+  <label><input type="checkbox" name="q172" value="C"> C. 安全认证</label><br>
+  <label><input type="checkbox" name="q172" value="D"> D. 安全审查</label><br>
+  <button type="button" onclick="checkAnswer('q172')">确认答案</button>
+  <div class="feedback" id="feedback_q172"></div>
+  <div class="analysis" id="analysis_q172">nan</div>
+</div>
+
+<div class="question" id="q173">
+  <p>173. 密码管理部门针对核心密码、普通密码的（）环节，建立健全安全管理制度，采取严格的保密措施和保密责任制，确保核心密码、普通密码的安全。 (多选)</p>
+  <label><input type="checkbox" name="q173" value="A"> A. 科研、生产</label><br>
+  <label><input type="checkbox" name="q173" value="B"> B. 服务、检测</label><br>
+  <label><input type="checkbox" name="q173" value="C"> C. 装备、使用</label><br>
+  <label><input type="checkbox" name="q173" value="D"> D. 销毁</label><br>
+  <button type="button" onclick="checkAnswer('q173')">确认答案</button>
+  <div class="feedback" id="feedback_q173"></div>
+  <div class="analysis" id="analysis_q173">nan</div>
+</div>
+
+<div class="question" id="q174">
+  <p>174. 密码管理部门根据工作需要会同有关部门建立核心密码、普通密码的（）和应急处置等协作机制，确保核心密码、普通密码安全管理的协同联动和有序高效。 (多选)</p>
+  <label><input type="checkbox" name="q174" value="A"> A. 安全监测预警</label><br>
+  <label><input type="checkbox" name="q174" value="B"> B. 安全风险评估</label><br>
+  <label><input type="checkbox" name="q174" value="C"> C. 信息通报</label><br>
+  <label><input type="checkbox" name="q174" value="D"> D. 重大事项会商</label><br>
+  <button type="button" onclick="checkAnswer('q174')">确认答案</button>
+  <div class="feedback" id="feedback_q174"></div>
+  <div class="analysis" id="analysis_q174">nan</div>
+</div>
+
+<div class="question" id="q175">
+  <p>175. 中央密码工作领导机构对全国密码工作实行统一领导，制定（），统筹协调()，推进国家密码法治建设。 (多选)</p>
+  <label><input type="checkbox" name="q175" value="A"> A. 国家密码工作重要法律法规</label><br>
+  <label><input type="checkbox" name="q175" value="B"> B. 国家密码工作重大方针政策</label><br>
+  <label><input type="checkbox" name="q175" value="C"> C. 国家密码重大事项和重要工作</label><br>
+  <label><input type="checkbox" name="q175" value="D"> D. 国家密码重要事项和重大工作</label><br>
+  <button type="button" onclick="checkAnswer('q175')">确认答案</button>
+  <div class="feedback" id="feedback_q175"></div>
+  <div class="analysis" id="analysis_q175">nan</div>
+</div>
+
+<div class="question" id="q176">
+  <p>176. 《中华人民共和国密码法》第十二条规定，任何组织或者个人不得利用密码从事危害（）等违法犯罪活动。 (多选)</p>
+  <label><input type="checkbox" name="q176" value="A"> A. 国家安全</label><br>
+  <label><input type="checkbox" name="q176" value="B"> B. 经济社会发展</label><br>
+  <label><input type="checkbox" name="q176" value="C"> C. 社会公共利益</label><br>
+  <label><input type="checkbox" name="q176" value="D"> D. 他人合法权益</label><br>
+  <button type="button" onclick="checkAnswer('q176')">确认答案</button>
+  <div class="feedback" id="feedback_q176"></div>
+  <div class="analysis" id="analysis_q176">nan</div>
+</div>
+
+<div class="question" id="q177">
+  <p>177. 国家采取措施，（）来源于中华人民共和国境内外的网络安全风险和威胁，保护关键信息基础设施免受攻击、侵入、干扰和破坏。 (多选)</p>
+  <label><input type="checkbox" name="q177" value="A"> A. 监测</label><br>
+  <label><input type="checkbox" name="q177" value="B"> B. 防御</label><br>
+  <label><input type="checkbox" name="q177" value="C"> C. 处置</label><br>
+  <label><input type="checkbox" name="q177" value="D"> D. 隔离</label><br>
+  <button type="button" onclick="checkAnswer('q177')">确认答案</button>
+  <div class="feedback" id="feedback_q177"></div>
+  <div class="analysis" id="analysis_q177">nan</div>
+</div>
+
+<div class="question" id="q178">
+  <p>178. 下列关于网络安全法的说法错误的有（）。 (多选)</p>
+  <label><input type="checkbox" name="q178" value="A"> A. 国家规定关键信息基础设施以外的网络运营者必须参与关键信息基础设施保护体系。</label><br>
+  <label><input type="checkbox" name="q178" value="B"> B. 关键信息基础设施的运营者可自行采购网络产品和服务不通过安全审查。</label><br>
+  <label><input type="checkbox" name="q178" value="C"> C. 关键信息基础设施的运营者可自行采购网络产品和服务不通过安全审查。</label><br>
+  <label><input type="checkbox" name="q178" value="D"> D. 国家网信部门应当统筹协调有关部门加强网络安全信息收集、分析和通报工作，按照规定统一发布网络安全监测预警信息。</label><br>
+  <button type="button" onclick="checkAnswer('q178')">确认答案</button>
+  <div class="feedback" id="feedback_q178"></div>
+  <div class="analysis" id="analysis_q178">nan</div>
+</div>
+
+<div class="question" id="q179">
+  <p>179. 网络安全事件应急预案应当按照事件发生后的（）等因素对网络安全事件进行分级，并规定相应的应急处置措施。 (多选)</p>
+  <label><input type="checkbox" name="q179" value="A"> A. 危害程度</label><br>
+  <label><input type="checkbox" name="q179" value="B"> B. 影响范围</label><br>
+  <label><input type="checkbox" name="q179" value="C"> C. 事件等级</label><br>
+  <label><input type="checkbox" name="q179" value="D"> D. 关注程度</label><br>
+  <button type="button" onclick="checkAnswer('q179')">确认答案</button>
+  <div class="feedback" id="feedback_q179"></div>
+  <div class="analysis" id="analysis_q179">nan</div>
+</div>
+
+<div class="question" id="q180">
+  <p>180. 建设关键信息基础设施应当确保其具有支持业务稳定、持续运行的性能，并保证安全技术措施（）。 (多选)</p>
+  <label><input type="checkbox" name="q180" value="A"> A. 同步规划</label><br>
+  <label><input type="checkbox" name="q180" value="B"> B. 同步建设</label><br>
+  <label><input type="checkbox" name="q180" value="C"> C. 同步投运</label><br>
+  <label><input type="checkbox" name="q180" value="D"> D. 同步使用</label><br>
+  <button type="button" onclick="checkAnswer('q180')">确认答案</button>
+  <div class="feedback" id="feedback_q180"></div>
+  <div class="analysis" id="analysis_q180">nan</div>
+</div>
+
+<div class="question" id="q181">
+  <p>181. 网络运营者不得（）其收集的个人信息，未经被收集者同意，不得向他人提供个人信息。 (多选)</p>
+  <label><input type="checkbox" name="q181" value="A"> A. 毁损</label><br>
+  <label><input type="checkbox" name="q181" value="B"> B. 篡改</label><br>
+  <label><input type="checkbox" name="q181" value="C"> C. 使用</label><br>
+  <label><input type="checkbox" name="q181" value="D"> D. 泄露</label><br>
+  <button type="button" onclick="checkAnswer('q181')">确认答案</button>
+  <div class="feedback" id="feedback_q181"></div>
+  <div class="analysis" id="analysis_q181">nan</div>
+</div>
+
+<div class="question" id="q182">
+  <p>182. 国家情报工作机构工作人员依法执行任务时，可以（）或者（）有关的档案、资料、物品。 (多选)</p>
+  <label><input type="checkbox" name="q182" value="A"> A. 查阅</label><br>
+  <label><input type="checkbox" name="q182" value="B"> B. 查获</label><br>
+  <label><input type="checkbox" name="q182" value="C"> C. 收缴</label><br>
+  <label><input type="checkbox" name="q182" value="D"> D. 调取</label><br>
+  <button type="button" onclick="checkAnswer('q182')">确认答案</button>
+  <div class="feedback" id="feedback_q182"></div>
+  <div class="analysis" id="analysis_q182">nan</div>
+</div>
+
+<div class="question" id="q183">
+  <p>183. 根据《中华人民共和国国家情报法》规定，国家建立健全（）的国家情报体制。 (多选)</p>
+  <label><input type="checkbox" name="q183" value="A"> A. 集中统一</label><br>
+  <label><input type="checkbox" name="q183" value="B"> B. 分工协作</label><br>
+  <label><input type="checkbox" name="q183" value="C"> C. 分工负责</label><br>
+  <label><input type="checkbox" name="q183" value="D"> D. 科学高效</label><br>
+  <button type="button" onclick="checkAnswer('q183')">确认答案</button>
+  <div class="feedback" id="feedback_q183"></div>
+  <div class="analysis" id="analysis_q183">nan</div>
+</div>
+
+<div class="question" id="q184">
+  <p>184. 国家情报工作坚持（）的原则。 (多选)</p>
+  <label><input type="checkbox" name="q184" value="A"> A. 公开工作与秘密工作相结合</label><br>
+  <label><input type="checkbox" name="q184" value="B"> B. 专门工作与群众路线相结合</label><br>
+  <label><input type="checkbox" name="q184" value="C"> C. 分工负责与协作配合相结合</label><br>
+  <label><input type="checkbox" name="q184" value="D"> D. 集中领导与快速反应相结合</label><br>
+  <button type="button" onclick="checkAnswer('q184')">确认答案</button>
+  <div class="feedback" id="feedback_q184"></div>
+  <div class="analysis" id="analysis_q184">nan</div>
+</div>
+
+<div class="question" id="q185">
+  <p>185. 国家情报工作机构包括（）。 (多选)</p>
+  <label><input type="checkbox" name="q185" value="A"> A. 国家安全机关</label><br>
+  <label><input type="checkbox" name="q185" value="B"> B. 公安机关情报机构</label><br>
+  <label><input type="checkbox" name="q185" value="C"> C. 军队情报机构</label><br>
+  <label><input type="checkbox" name="q185" value="D"> D. 国家保密局</label><br>
+  <button type="button" onclick="checkAnswer('q185')">确认答案</button>
+  <div class="feedback" id="feedback_q185"></div>
+  <div class="analysis" id="analysis_q185">nan</div>
+</div>
+
+<div class="question" id="q186">
+  <p>186. 国家情报工作机构应当运用科学技术手段，提高对情报信息的（）水平。 (多选)</p>
+  <label><input type="checkbox" name="q186" value="A"> A. 收集</label><br>
+  <label><input type="checkbox" name="q186" value="B"> B. 鉴别</label><br>
+  <label><input type="checkbox" name="q186" value="C"> C. 筛选</label><br>
+  <label><input type="checkbox" name="q186" value="D"> D. 综合和研判分析</label><br>
+  <button type="button" onclick="checkAnswer('q186')">确认答案</button>
+  <div class="feedback" id="feedback_q186"></div>
+  <div class="analysis" id="analysis_q186">nan</div>
+</div>
+
+<div class="question" id="q187">
+  <p>187. 国家情报工作机构依法开展情报工作，可以要求有关机关、组织和公民提供必要的（）。 (多选)</p>
+  <label><input type="checkbox" name="q187" value="A"> A. 配合</label><br>
+  <label><input type="checkbox" name="q187" value="B"> B. 支持</label><br>
+  <label><input type="checkbox" name="q187" value="C"> C. 协助</label><br>
+  <label><input type="checkbox" name="q187" value="D"> D. 支援</label><br>
+  <button type="button" onclick="checkAnswer('q187')">确认答案</button>
+  <div class="feedback" id="feedback_q187"></div>
+  <div class="analysis" id="analysis_q187">nan</div>
+</div>
+
+<div class="question" id="q188">
+  <p>188. （）等有关部门以及国有企业事业单位应当协助国家情报工作机构做好安置工作。 (多选)</p>
+  <label><input type="checkbox" name="q188" value="A"> A. 公安</label><br>
+  <label><input type="checkbox" name="q188" value="B"> B. 民政、财政</label><br>
+  <label><input type="checkbox" name="q188" value="C"> C. 卫生、教育</label><br>
+  <label><input type="checkbox" name="q188" value="D"> D. 人力资源和社会保障部</label><br>
+  <button type="button" onclick="checkAnswer('q188')">确认答案</button>
+  <div class="feedback" id="feedback_q188"></div>
+  <div class="analysis" id="analysis_q188">nan</div>
+</div>
+
+<div class="question" id="q189">
+  <p>189. 下列（）罪名适用于《中华人民共和国刑法》第一百零六条所规定的与境外机构、组织、个人相勾结从重处罚的情形。 (多选)</p>
+  <label><input type="checkbox" name="q189" value="A"> A. 分裂国家罪</label><br>
+  <label><input type="checkbox" name="q189" value="B"> B. 武装叛乱、暴乱罪</label><br>
+  <label><input type="checkbox" name="q189" value="C"> C. 颠覆国家政权罪</label><br>
+  <label><input type="checkbox" name="q189" value="D"> D. 资助危害国家安全犯罪活动罪</label><br>
+  <button type="button" onclick="checkAnswer('q189')">确认答案</button>
+  <div class="feedback" id="feedback_q189"></div>
+  <div class="analysis" id="analysis_q189">nan</div>
+</div>
+
+<div class="question" id="q190">
+  <p>190. 甲因犯间谍罪被国家安全机关立案侦查，在审讯中，甲检举揭发乙是其上线，并提供关于乙实施间谍行为的重要线索。甲的揭发内容后经查证属实，下列说法正确的有（）。 (多选)</p>
+  <label><input type="checkbox" name="q190" value="A"> A. 甲成立立功表现，可从轻或减轻处罚</label><br>
+  <label><input type="checkbox" name="q190" value="B"> B. 因乙属于甲的同案犯，甲不成立立功表现，但坦白情节成立</label><br>
+  <label><input type="checkbox" name="q190" value="C"> C. 若甲的揭发阻止了乙的重大犯罪活动，甲可以减轻或免除处
+罚</label><br>
+  <label><input type="checkbox" name="q190" value="D"> D. 因乙属于甲的同案犯，甲不成立立功表现，但自首情节成立</label><br>
+  <button type="button" onclick="checkAnswer('q190')">确认答案</button>
+  <div class="feedback" id="feedback_q190"></div>
+  <div class="analysis" id="analysis_q190">nan</div>
+</div>
+
+<div class="question" id="q191">
+  <p>191. 抗战时期，山东省抗日民主政府曾与八路军115师联合发布《战邮工作条例》。根据该规定，战邮局邮件按"密级"分类。"党政军各机关之信函、指示、决定、通知"等，应贴"（）"并"加盖公文戳记"，作为邮局"甲级密件"传递。 (单选)</p>
+  <label><input type="radio" name="q191" value="A"> A. 保密邮票</label><br>
+  <label><input type="radio" name="q191" value="B"> B. 机要邮票</label><br>
+  <label><input type="radio" name="q191" value="C"> C. 保密标签</label><br>
+  <label><input type="radio" name="q191" value="D"> D. 机要标签</label><br>
+  <button type="button" onclick="checkAnswer('q191')">确认答案</button>
+  <div class="feedback" id="feedback_q191"></div>
+  <div class="analysis" id="analysis_q191">nan</div>
+</div>
+
+<div class="question" id="q192">
+  <p>192. 1931年，周恩来亲自编制了我党第一部密码（）。 (单选)</p>
+  <label><input type="radio" name="q192" value="A"> A. 豪密</label><br>
+  <label><input type="radio" name="q192" value="B"> B. 毛密</label><br>
+  <label><input type="radio" name="q192" value="C"> C. 周密</label><br>
+  <label><input type="radio" name="q192" value="D"> D. 党密</label><br>
+  <button type="button" onclick="checkAnswer('q192')">确认答案</button>
+  <div class="feedback" id="feedback_q192"></div>
+  <div class="analysis" id="analysis_q192">nan</div>
+</div>
+
+<div class="question" id="q193">
+  <p>193. 1929年10月，中共中央在（）建立了第一个秘密无线电台。 (单选)</p>
+  <label><input type="radio" name="q193" value="A"> A. 香港</label><br>
+  <label><input type="radio" name="q193" value="B"> B. 台湾</label><br>
+  <label><input type="radio" name="q193" value="C"> C. 延安</label><br>
+  <label><input type="radio" name="q193" value="D"> D. 上海</label><br>
+  <button type="button" onclick="checkAnswer('q193')">确认答案</button>
+  <div class="feedback" id="feedback_q193"></div>
+  <div class="analysis" id="analysis_q193">nan</div>
+</div>
+
+<div class="question" id="q194">
+  <p>194. 一代代保密工作者恪守不渝的箴言警句"保守机密，慎之又慎"是(  ）提出的。 (单选)</p>
+  <label><input type="radio" name="q194" value="A"> A. 邓小平</label><br>
+  <label><input type="radio" name="q194" value="B"> B. 刘少奇</label><br>
+  <label><input type="radio" name="q194" value="C"> C. 毛泽东</label><br>
+  <label><input type="radio" name="q194" value="D"> D. 周恩来</label><br>
+  <button type="button" onclick="checkAnswer('q194')">确认答案</button>
+  <div class="feedback" id="feedback_q194"></div>
+  <div class="analysis" id="analysis_q194">nan</div>
+</div>
+
+<div class="question" id="q195">
+  <p>195. 1930年6月11日，中央政治局会议在通过的《目前政治任务的决议》中，针对当时党内一些领导人和党员存在的资产阶级浪漫冒险情绪，进一步强调了加强（）的紧迫性。 (单选)</p>
+  <label><input type="radio" name="q195" value="A"> A. 保密工作</label><br>
+  <label><input type="radio" name="q195" value="B"> B. 工人运动</label><br>
+  <label><input type="radio" name="q195" value="C"> C. 农民运动</label><br>
+  <label><input type="radio" name="q195" value="D"> D. 宣传工作</label><br>
+  <button type="button" onclick="checkAnswer('q195')">确认答案</button>
+  <div class="feedback" id="feedback_q195"></div>
+  <div class="analysis" id="analysis_q195">nan</div>
+</div>
+
+<div class="question" id="q196">
+  <p>196. 1978年，党中央发出《关于恢复和健全保密委员会的通知》，中央保密委员会及其办事机构恢复并开始工作。 (判断)</p>
+  <label><input type="radio" name="q196" value="正确"> 正确</label>
+  <label><input type="radio" name="q196" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q196')">确认答案</button>
+  <div class="feedback" id="feedback_q196"></div>
+  <div class="analysis" id="analysis_q196">nan</div>
+</div>
+
+<div class="question" id="q197">
+  <p>197. 中共情报战线上有"龙潭前后三杰"之说。大革命失败后，李克农、钱壮飞、胡底深入国民党统治区的龙潭虎穴开展秘密工作，被称为"龙潭前三杰"。 (判断)</p>
+  <label><input type="radio" name="q197" value="正确"> 正确</label>
+  <label><input type="radio" name="q197" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q197')">确认答案</button>
+  <div class="feedback" id="feedback_q197"></div>
+  <div class="analysis" id="analysis_q197">nan</div>
+</div>
+
+<div class="question" id="q198">
+  <p>198. 1929年12月，中共中央制定了《中共中央秘密工作条例》，其中明确了各级党的秘密委员会的职责任务。其中包括发展党员要进行严格的保密审查)。 (判断)</p>
+  <label><input type="radio" name="q198" value="正确"> 正确</label>
+  <label><input type="radio" name="q198" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q198')">确认答案</button>
+  <div class="feedback" id="feedback_q198"></div>
+  <div class="analysis" id="analysis_q198">nan</div>
+</div>
+
+<div class="question" id="q199">
+  <p>199. 中国共产党第一次全国代表大会通过了党的第一个纲领《中国共产党纲领》，其中第六条规定：“党处于秘密状态时，党的重要主张和党员身份应保守秘密。” (判断)</p>
+  <label><input type="radio" name="q199" value="正确"> 正确</label>
+  <label><input type="radio" name="q199" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q199')">确认答案</button>
+  <div class="feedback" id="feedback_q199"></div>
+  <div class="analysis" id="analysis_q199">nan</div>
+</div>
+
+<div class="question" id="q200">
+  <p>200. 1950年10月15日，中国共产党中央委员会下发《关于加强保守国家秘密的决定》，这是中华人民共和国成立后，中共中央为加强保密工作，向全党发出的保密工作第一个纲领性文件。 (判断)</p>
+  <label><input type="radio" name="q200" value="正确"> 正确</label>
+  <label><input type="radio" name="q200" value="错误"> 错误</label>
+  <button type="button" onclick="checkAnswer('q200')">确认答案</button>
+  <div class="feedback" id="feedback_q200"></div>
+  <div class="analysis" id="analysis_q200">nan</div>
+</div>
+
+
+</form>
+
+<script>
+const answers = {
+  "q1": "错误",
+  "q2": "正确",
+  "q3": "正确",
+  "q4": "正确",
+  "q5": "正确",
+  "q6": "错误",
+  "q7": "正确",
+  "q8": "正确",
+  "q9": "正确",
+  "q10": "错误",
+  "q11": "错误",
+  "q12": "正确",
+  "q13": "正确",
+  "q14": "正确",
+  "q15": "正确",
+  "q16": "错误",
+  "q17": "正确",
+  "q18": "正确",
+  "q19": "错误",
+  "q20": "正确",
+  "q21": "正确",
+  "q22": "正确",
+  "q23": "错误",
+  "q24": "A",
+  "q25": "D",
+  "q26": "D",
+  "q27": "B",
+  "q28": "A",
+  "q29": "D",
+  "q30": "A",
+  "q31": "D",
+  "q32": "C",
+  "q33": "A",
+  "q34": "C",
+  "q35": "B",
+  "q36": "A",
+  "q37": "A",
+  "q38": "B",
+  "q39": ['A','C','D'],
+  "q40": ['B','C'],
+  "q41": ['A','B','C','D'],
+  "q42": ['A','B','C','D'],
+  "q43": ['A','B','C'],
+  "q44": ['A','B','C','D'],
+  "q45": ['A','B','C'],
+  "q46": ['A','C','D'],
+  "q47": "D",
+  "q48": "D",
+  "q49": "B",
+  "q50": "D",
+  "q51": "B",
+  "q52": ['A','B'],
+  "q53": "正确",
+  "q54": "B",
+  "q55": ['A','B','C','D'],
+  "q56": "错误",
+  "q57": "D",
+  "q58": "B",
+  "q59": "C",
+  "q60": "D",
+  "q61": "A",
+  "q62": "C",
+  "q63": "B",
+  "q64": "A",
+  "q65": "B",
+  "q66": "D",
+  "q67": ['A','B','C','D'],
+  "q68": ['A','B','C','D'],
+  "q69": "A",
+  "q70": ['A','B','C','D'],
+  "q71": ['A','B','C','D'],
+  "q72": "C",
+  "q73": ['A','B','C','D'],
+  "q74": "错误",
+  "q75": "错误",
+  "q76": "正确",
+  "q77": "错误",
+  "q78": "错误",
+  "q79": "正确",
+  "q80": "正确",
+  "q81": "错误",
+  "q82": "正确",
+  "q83": "错误",
+  "q84": "错误",
+  "q85": "正确",
+  "q86": "错误",
+  "q87": "正确",
+  "q88": "正确",
+  "q89": "正确",
+  "q90": "正确",
+  "q91": "错误",
+  "q92": "正确",
+  "q93": "正确",
+  "q94": "错误",
+  "q95": "正确",
+  "q96": "错误",
+  "q97": "正确",
+  "q98": "正确",
+  "q99": "正确",
+  "q100": "错误",
+  "q101": "正确",
+  "q102": "错误",
+  "q103": "错误",
+  "q104": "正确",
+  "q105": "正确",
+  "q106": "错误",
+  "q107": "错误",
+  "q108": "正确",
+  "q109": "正确",
+  "q110": "错误",
+  "q111": "正确",
+  "q112": "B",
+  "q113": "A",
+  "q114": "D",
+  "q115": "C",
+  "q116": "C",
+  "q117": "A",
+  "q118": "D",
+  "q119": "D",
+  "q120": "D",
+  "q121": "A",
+  "q122": "D",
+  "q123": "B",
+  "q124": "A",
+  "q125": "D",
+  "q126": "B",
+  "q127": "B",
+  "q128": "D",
+  "q129": "D",
+  "q130": "D",
+  "q131": "C",
+  "q132": "D",
+  "q133": "B",
+  "q134": "A",
+  "q135": "A",
+  "q136": "A",
+  "q137": "D",
+  "q138": "A",
+  "q139": "B",
+  "q140": "A",
+  "q141": "B",
+  "q142": "C",
+  "q143": "A",
+  "q144": "A",
+  "q145": "B",
+  "q146": "A",
+  "q147": "A",
+  "q148": "C",
+  "q149": "D",
+  "q150": "C",
+  "q151": "B",
+  "q152": "D",
+  "q153": "C",
+  "q154": "B",
+  "q155": ['A','B','C','D'],
+  "q156": ['B','D'],
+  "q157": ['A','B','C','D'],
+  "q158": ['A','B','C'],
+  "q159": ['A','B','C','D'],
+  "q160": ['A','C'],
+  "q161": ['A','C','D'],
+  "q162": ['A','B','C','D'],
+  "q163": ['B','C'],
+  "q164": ['A','B','C','D'],
+  "q165": ['A','B','C'],
+  "q166": ['A','B','C','D'],
+  "q167": ['A','B','C','D'],
+  "q168": ['A','C'],
+  "q169": ['A','B','C','D'],
+  "q170": ['A','C'],
+  "q171": ['A','D'],
+  "q172": ['A','C'],
+  "q173": ['A','B','C','D'],
+  "q174": ['A','B','C','D'],
+  "q175": ['B','C'],
+  "q176": ['A','C','D'],
+  "q177": ['A','B','C'],
+  "q178": ['A','B'],
+  "q179": ['A','B'],
+  "q180": ['A','B','D'],
+  "q181": ['A','B','D'],
+  "q182": ['A','D'],
+  "q183": ['A','B','D'],
+  "q184": ['A','B','C'],
+  "q185": ['A','B','C'],
+  "q186": ['B','C','D'],
+  "q187": ['A','B','C'],
+  "q188": ['A','B','C','D'],
+  "q189": ['A','B','C'],
+  "q190": ['A','C'],
+  "q191": "B",
+  "q192": "A",
+  "q193": "D",
+  "q194": "C",
+  "q195": "A",
+  "q196": "正确",
+  "q197": "正确",
+  "q198": "正确",
+  "q199": "正确",
+  "q200": "正确",
+};
+
+function checkAnswer(qid) {
+    const feedbackEl = document.getElementById(`feedback_${qid}`);
+    const analysisEl = document.getElementById(`analysis_${qid}`);
+
+    let selectedValues = [];
+    document.querySelectorAll(`input[name="${qid}"]:checked`).forEach(el => {
+        selectedValues.push(el.value.trim());
+    });
+
+    if (selectedValues.length === 0) {
+        feedbackEl.innerHTML = `<span class="wrong">请先选择一个答案！</span>`;
+        return;
+    }
+
+    const correct = answers[qid];
+    let isCorrect = false;
+
+    if (Array.isArray(correct)) {
+        // 多选
+        isCorrect = (correct.length === selectedValues.length) &&
+                    correct.every(v => selectedValues.includes(v));
+    } else {
+        // 单选或判断
+        isCorrect = (selectedValues[0] === correct);
+    }
+
+    if (isCorrect) {
+        feedbackEl.innerHTML = `<span class="correct">✅ 正确</span>`;
+    } else {
+        feedbackEl.innerHTML = `<span class="wrong">❌ 错误</span>`;
+    }
+
+    analysisEl.style.display = 'block';
+}
+</script>
+
 </body>
 </html>
